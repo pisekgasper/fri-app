@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "588555094209",
+    "project_id": "fri-app-acf51",
+    "storage_bucket": "fri-app-acf51.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588555094209:android:55913aa3ec5c28cde02c40",
+        "android_client_info": {
+          "package_name": "com.ctrl.fri_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588555094209-iun5kgtq8gqo6ni7rvatfdefii57obim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgE79O7Bh5c5ucc7KyHM3V2Z67xopxj5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588555094209-iun5kgtq8gqo6ni7rvatfdefii57obim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
