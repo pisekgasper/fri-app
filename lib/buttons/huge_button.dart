@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fri_app/timetable.dart';
-import '../bus_info.dart';
 
 class HugeButton extends StatefulWidget {
   const HugeButton({
@@ -22,11 +20,11 @@ class _HugeButtonState extends State<HugeButton> {
       _isPressed = true;
     });
     if (widget.icon == Icons.calendar_today_rounded) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => TimetablePage()));
+      Navigator.pushNamed(context, '/Schedule');
     } else if (widget.icon == Icons.directions_bus_rounded) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => BusPage()));
+      Navigator.pushNamed(context, '/BusPage');
+    } else if (widget.icon == Icons.fastfood_rounded) {
+      Navigator.pushNamed(context, '/DailyMenu');
     }
   }
 
