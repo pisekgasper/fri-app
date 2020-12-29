@@ -4,7 +4,7 @@ import 'bus_info_model.dart';
 
 Future<BusInfo> fetchBusFrom() async {
   final response =
-      await http.get('https://prominfo.projekti.si/lpp_rc/api/602092');
+      await http.get('https://prominfo.projekti.si/lpp_rc/api/703122');
 
   if (response.statusCode == 200) {
     return BusInfo.fromJson(jsonDecode(response.body));
@@ -15,7 +15,7 @@ Future<BusInfo> fetchBusFrom() async {
 
 Future<BusInfo> fetchBusTo() async {
   final response =
-      await http.get('https://prominfo.projekti.si/lpp_rc/api/602093');
+      await http.get('https://prominfo.projekti.si/lpp_rc/api/703121');
 
   if (response.statusCode == 200) {
     return BusInfo.fromJson(jsonDecode(response.body));

@@ -21,7 +21,11 @@ class _BusPageState extends State<BusPage> {
           // ...
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            NavBar(title: "Avtobus", back: true, user: true),
+            NavBar(
+              title: "Avtobus",
+              back: true,
+              user: false,
+            ),
             Neumorphic(
               margin: EdgeInsets.symmetric(vertical: 40),
               style: NeumorphicStyle(
