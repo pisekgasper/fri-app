@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'buttons/round_button.dart';
 
 class NavBar extends StatelessWidget {
-
   const NavBar({
     this.title,
     this.back,
@@ -28,9 +27,11 @@ class NavBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Align(
-            alignment: Alignment.topLeft,
-            child: back ? RoundButton(icon: Icons.chevron_left_rounded) : null
-          ),
+              alignment: Alignment.topLeft,
+              child: back
+                  ? RoundButton(
+                      icon: Icons.chevron_left_rounded, addMargin: true)
+                  : null),
           Container(
             color: Colors.transparent,
             height: 85,
@@ -48,11 +49,11 @@ class NavBar extends StatelessWidget {
           ),
           Align(
               alignment: Alignment.topRight,
-              child: user ? RoundButton(icon: Icons.person_rounded) : null
-          ),
+              child: RoundButton(
+                  icon: user ? Icons.person_rounded : Icons.refresh_rounded,
+                  addMargin: true)),
         ],
       ),
     );
   }
-
 }

@@ -4,10 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fri_app/authentication_service.dart';
+import 'package:fri_app/bus_info.dart';
 import 'package:fri_app/home_page.dart';
 
 import 'package:fri_app/sign_in.dart';
+import 'package:fri_app/timetable.dart';
 import 'package:provider/provider.dart';
+
+import 'daily_menu.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -16,7 +20,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   // SystemChrome.setEnabledSystemUIOverlays([]);
-  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values); // Show transparent status bar
+  SystemChrome.setEnabledSystemUIOverlays(
+      SystemUiOverlay.values); // Show transparent status bar
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
@@ -31,10 +36,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
-          create: (_)  => AuthenticationService(FirebaseAuth.instance),
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
         StreamProvider(
-          create: (context)  => context.read<AuthenticationService>().authStateChanges,
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
         ),
       ],
       child: NeumorphicApp(
@@ -51,7 +57,13 @@ class MyApp extends StatelessWidget {
           intensity: 1.0,
           depth: -7.0,
         ),
-        home: AuthenticationWrapper(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => AuthenticationWrapper(),
+          '/BusPage': (context) => BusPage(),
+          '/Schedule': (context) => TimetablePage(),
+          '/Menu': (context) => DailyMenuPage(),
+        },
       ),
     );
   }
@@ -66,7 +78,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
 
-    if(firebaseUser != null) {
+    if (firebaseUser != null) {
       return HomePage();
     }
     return SignInPage();
