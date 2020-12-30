@@ -21,9 +21,13 @@ class _HugeButtonState extends State<HugeButton> {
     setState(() {
       _isPressed = true;
     });
-    if (widget.icon == Icons.calendar_today_rounded)
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => TimetablePage()));
+    if (widget.icon == Icons.calendar_today_rounded) {
+      Navigator.pushNamed(context, '/Schedule');
+    } else if (widget.icon == Icons.directions_bus_rounded) {
+      Navigator.pushNamed(context, '/BusPage');
+    } else if (widget.icon == Icons.fastfood_rounded) {
+      Navigator.pushNamed(context, '/DailyMenu');
+    }
   }
 
   void _onPointerUp(PointerUpEvent event) {

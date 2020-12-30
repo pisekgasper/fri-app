@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:fri_app/get_bus.dart';
 import 'package:provider/provider.dart';
 import '../account.dart';
 import '../authentication_service.dart';
@@ -35,6 +36,8 @@ class _RoundButtonState extends State<RoundButton> {
     else if (widget.icon == Icons.logout) {
       context.read<AuthenticationService>().signOut();
       Navigator.popUntil(context, (route) => route.isFirst);
+    } else if (widget.icon == Icons.refresh_rounded) {
+      Navigator.popAndPushNamed(context, '/BusPage');
     }
   }
 

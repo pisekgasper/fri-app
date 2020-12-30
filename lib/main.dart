@@ -4,9 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fri_app/authentication_service.dart';
+import 'package:fri_app/bus_info.dart';
 import 'package:fri_app/home_page.dart';
 
 import 'package:fri_app/sign_in.dart';
+import 'package:fri_app/schedule.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -52,7 +54,13 @@ class MyApp extends StatelessWidget {
           intensity: 1.0,
           depth: -7.0,
         ),
-        home: AuthenticationWrapper(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => AuthenticationWrapper(),
+          '/BusPage': (context) => BusPage(),
+          '/Schedule': (context) => TimetablePage(),
+          //'/DailyMenu': (context) => DailyMenuPage(),
+        },
       ),
     );
   }
