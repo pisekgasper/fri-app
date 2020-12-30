@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:fri_app/timetable.dart';
+import 'package:fri_app/schedule.dart';
 
 class HugeButton extends StatefulWidget {
   const HugeButton({
