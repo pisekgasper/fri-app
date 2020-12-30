@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => AuthenticationWrapper(),
           '/BusPage': (context) => BusPage(),
           '/Schedule': (context) => TimetablePage(),
-          '/Menu': (context) => DailyMenuPage(),
+          '/DailyMenu': (context) => DailyMenuPage(),
         },
       ),
     );

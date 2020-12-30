@@ -64,8 +64,8 @@ class _RoundButtonState extends State<RoundButton> {
             depth: !_isPressed ? 7.0 : 0.0,
             boxShape: NeumorphicBoxShape.circle()),
         child: Container(
-          width: _screenWidth / 10,
-          height: _screenHeight / 10,
+          width: _screenWidth / 9,
+          height: _screenHeight / 9,
           child: Icon(widget.icon,
               color: Colors.white,
               size: (widget.icon == Icons.chevron_left_rounded)
