@@ -142,7 +142,7 @@ class _TimetablePageState extends State<TimetablePage> {
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: Column(children: [
-        NavBar(title: "Schedule", back: true, user: true),
+        NavBar(title: "Schedule", back: true, user: true, refresh: false),
         Stack(
             overflow: Overflow.visible,
             alignment: Alignment.center,

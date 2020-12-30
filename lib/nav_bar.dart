@@ -7,11 +7,13 @@ class NavBar extends StatelessWidget {
     this.title,
     this.back,
     this.user,
+    this.refresh,
   });
 
   final String title;
   final bool back;
   final bool user;
+  final bool refresh;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,15 @@ class NavBar extends StatelessWidget {
               child: Padding(
                   padding: EdgeInsets.only(right: _buttonPadding),
                   child: RoundButton(icon: Icons.person_rounded)),
+            ),
+          ),
+          Visibility(
+            visible: refresh,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                  padding: EdgeInsets.only(right: _buttonPadding),
+                  child: RoundButton(icon: Icons.refresh_rounded)),
             ),
           )
         ],

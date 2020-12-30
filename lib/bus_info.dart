@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'bus_info_model.dart';
 import 'get_bus.dart';
 import 'nav_bar.dart';
@@ -9,7 +10,7 @@ class BusPage extends StatefulWidget {
   _BusPageState createState() => new _BusPageState();
 }
 
-class _BusPageState extends State<BusPage> {
+class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -25,6 +26,7 @@ class _BusPageState extends State<BusPage> {
               title: "Avtobus",
               back: true,
               user: false,
+              refresh: true,
             ),
             Neumorphic(
               margin: EdgeInsets.symmetric(vertical: 40),
@@ -117,7 +119,13 @@ class _BusPageState extends State<BusPage> {
                         } else if (snapshot.hasError) {
                           return Text("${snapshot.error}");
                         }
-                        return CircularProgressIndicator();
+                        return SpinKitWave(
+                          color: Colors.white,
+                          size: _screenHeight / 55,
+                          controller: AnimationController(
+                              vsync: this,
+                              duration: const Duration(milliseconds: 1200)),
+                        );
                       },
                     )
                   ],
@@ -215,7 +223,13 @@ class _BusPageState extends State<BusPage> {
                         } else if (snapshot.hasError) {
                           return Text("${snapshot.error}");
                         }
-                        return CircularProgressIndicator();
+                        return SpinKitWave(
+                          color: Colors.white,
+                          size: _screenHeight / 55,
+                          controller: AnimationController(
+                              vsync: this,
+                              duration: const Duration(milliseconds: 1200)),
+                        );
                       },
                     )
                   ],

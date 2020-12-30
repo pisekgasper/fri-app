@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: Column(children: [
-        NavBar(title: "", back: false, user: true),
+        NavBar(title: "", back: false, user: true, refresh: false),
         Container(
           height: _fullNameFontSize * 4,
           child: Column(

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fri_app/nav_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DailyMenuPage extends StatelessWidget {
@@ -19,6 +18,7 @@ class DailyMenuPage extends StatelessWidget {
               title: 'Menu',
               back: true,
               user: true,
+              refresh: false,
             ),
             StreamBuilder(
               // ignore: deprecated_member_use

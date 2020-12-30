@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fri_app/authentication_service.dart';
 import 'package:fri_app/bus_info.dart';
+import 'package:fri_app/daily_menu.dart';
 import 'package:fri_app/home_page.dart';
-
 import 'package:fri_app/sign_in.dart';
 import 'package:fri_app/schedule.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => AuthenticationWrapper(),
           '/BusPage': (context) => BusPage(),
           '/Schedule': (context) => TimetablePage(),
-          //'/DailyMenu': (context) => DailyMenuPage(),
+          '/DailyMenu': (context) => DailyMenuPage(),
         },
       ),
     );

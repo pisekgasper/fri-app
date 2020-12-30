@@ -94,7 +94,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: Column(children: [
-        NavBar(title: "Account", back: true, user: false),
+        NavBar(title: "Account", back: true, user: false, refresh: false),
         Expanded(
           child: Container(
             child: Column(children: [
