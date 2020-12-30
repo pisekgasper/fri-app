@@ -32,6 +32,8 @@ dependencies:
 
   flutter_neumorphic: ^3.0.3
   simple_animations: ^2.4.2
+  font_awesome_flutter: ^8.11.0
+  flutter_spinkit: "^4.1.2"
 
   provider: ^4.3.2+3
 
