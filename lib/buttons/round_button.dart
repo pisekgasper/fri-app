@@ -1,107 +1,79 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:provider/provider.dart';
 import '../account.dart';
+import '../authentication_service.dart';
 
 class RoundButton extends StatefulWidget {
-
-  const RoundButton({
-    this.icon,
-  });
+  const RoundButton({this.icon});
 
   final IconData icon;
 
   @override
-  _ButtonUserState createState() => _ButtonUserState();
+  _RoundButtonState createState() => _RoundButtonState();
 }
 
-class _ButtonUserState extends State<RoundButton> {
-
+class _RoundButtonState extends State<RoundButton> {
   bool _isPressed = false;
 
-  // We're only really interested in down and up events,
-  // for now.
   void _onPointerDown(PointerDownEvent event) {
     setState(() {
       _isPressed = true;
     });
-    if(widget.icon == Icons.chevron_left_rounded)
-      Navigator.pop(context);
-    else if (widget.icon == Icons.person_rounded)
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AccountPage()));
   }
 
   void _onPointerUp(PointerUpEvent event) {
     setState(() {
       _isPressed = false;
     });
+    if (widget.icon == Icons.chevron_left_rounded)
+      Navigator.pop(context);
+    else if (widget.icon == Icons.person_rounded)
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AccountPage()));
+    else if (widget.icon == Icons.logout) {
+      context.read<AuthenticationService>().signOut();
+      Navigator.popUntil(context, (route) => route.isFirst);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
-    final _screenHeight = MediaQuery.of(context).size.height;
+
+    final double _buttonSize = _screenWidth / 9;
+    final double _iconSize = _screenWidth / 16;
+    final double _iconSizeLeft = _screenWidth / 14;
 
     return Listener(
       onPointerDown: _onPointerDown,
       onPointerUp: _onPointerUp,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 70),
-            width: 50,
-            height: 50,
-            margin: EdgeInsets.only(top: 60.0, right: 20.0, left: 20.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40.0),
-              color: const Color(0xff2c2f34),
-              boxShadow: _isPressed ? null : [
-                BoxShadow(
-                  color: const Color(0xff212327),
-                  offset: Offset(0.07 * 0.35 * _screenWidth / 2, 0.07 * 0.35 * _screenWidth / 2),
-                  blurRadius: 0.056 * _screenWidth / 3,
-                ),
-              ],
+      child: Neumorphic(
+        duration: const Duration(milliseconds: 80),
+        style: NeumorphicStyle(
+            depth: !_isPressed ? 5.0 : 0.0,
+            boxShape: NeumorphicBoxShape.circle()),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 80),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(0.94, 0.92),
+              end: Alignment(-0.88, -0.89),
+              colors: _isPressed
+                  ? [const Color(0xff2c2f34), const Color(0xff2c2f34)]
+                  : [const Color(0xff282a2f), const Color(0xff2f3238)],
+              stops: [0.0, 1.0],
             ),
           ),
-
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 70),
-            width: 50,
-            height: 50,
-            margin: EdgeInsets.only(top: 60.0, right: 20.0, left: 20.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40.0),
-              gradient: LinearGradient(
-                begin: Alignment(0.94, 0.92),
-                end: Alignment(-0.88, -0.89),
-                colors: _isPressed ? [const Color(0xff2c2f34), const Color(0xff2c2f34)] : [const Color(0xff282a2f), const Color(0xff2f3238)],
-                stops: [0.0, 1.0],
-              ),
-              boxShadow: _isPressed ? null : [
-                BoxShadow(
-                  color: const Color(0xff373b41),
-                  offset: Offset(-0.07 * 0.35 * _screenWidth / 2, -0.07 * 0.35 * _screenWidth / 2),
-                  blurRadius: 0.056 * _screenWidth / 3,
-                ),
-              ],
-            ),
-          ),
-
-          Container(
-            width: 50,
-            height: 50,
-            margin: EdgeInsets.only(top: 60.0, right: 20.0, left: 20.0),
-            color: Colors.transparent,
-            child: Icon(
-              widget.icon,
+          width: _buttonSize,
+          height: _buttonSize,
+          child: Icon(widget.icon,
               color: Colors.white,
-              size: (widget.icon == Icons.chevron_left_rounded) ? 30.0 : 25.0,
-            ),
-          ),
-
-        ],
+              size: (widget.icon == Icons.chevron_left_rounded)
+                  ? _iconSizeLeft
+                  : _iconSize),
+        ),
       ),
     );
   }
