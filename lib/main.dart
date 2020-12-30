@@ -9,14 +9,13 @@ import 'package:fri_app/home_page.dart';
 import 'package:fri_app/sign_in.dart';
 import 'package:provider/provider.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   // SystemChrome.setEnabledSystemUIOverlays([]);
-  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values); // Show transparent status bar
+  SystemChrome.setEnabledSystemUIOverlays(
+      SystemUiOverlay.values); // Show transparent status bar
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
@@ -31,15 +30,17 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
-          create: (_)  => AuthenticationService(FirebaseAuth.instance),
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
         StreamProvider(
-          create: (context)  => context.read<AuthenticationService>().authStateChanges,
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
         ),
       ],
       child: NeumorphicApp(
         themeMode: ThemeMode.light,
         theme: NeumorphicThemeData(
+          variantColor: const Color(0xffee235a),
           baseColor: const Color(0xff2c2f34),
           accentColor: const Color(0xffee235a),
           shadowLightColor: const Color(0xff383c42),
@@ -66,7 +67,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
 
-    if(firebaseUser != null) {
+    if (firebaseUser != null) {
       return HomePage();
     }
     return SignInPage();
