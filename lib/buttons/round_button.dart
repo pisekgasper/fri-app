@@ -23,23 +23,6 @@ class _RoundButtonState extends State<RoundButton> {
     });
   }
 
-  void _onPointerUp(PointerUpEvent event) {
-    setState(() {
-      _isPressed = false;
-    });
-    if (widget.icon == Icons.chevron_left_rounded)
-      Navigator.pop(context);
-    else if (widget.icon == Icons.person_rounded)
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AccountPage()));
-    else if (widget.icon == Icons.logout) {
-      context.read<AuthenticationService>().signOut();
-      Navigator.popUntil(context, (route) => route.isFirst);
-    } else if (widget.icon == Icons.refresh_rounded) {
-      Navigator.popAndPushNamed(context, '/BusPage');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -50,7 +33,19 @@ class _RoundButtonState extends State<RoundButton> {
 
     return Listener(
       onPointerDown: _onPointerDown,
-      onPointerUp: _onPointerUp,
+      onPointerUp: (PointerUpEvent event) {
+        setState(() {
+          _isPressed = false;
+        });
+        FocusScope.of(context).unfocus();
+        if (widget.icon == Icons.chevron_left_rounded)
+          Navigator.pop(context);
+        else if (widget.icon == Icons.person_rounded)
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AccountPage()));
+        else if (widget.icon == Icons.refresh_rounded)
+          Navigator.popAndPushNamed(context, '/BusPage');
+      },
       child: Neumorphic(
         duration: const Duration(milliseconds: 80),
         style: NeumorphicStyle(

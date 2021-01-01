@@ -68,11 +68,82 @@ class AuthenticationService {
     }
   }
 
-  Future<String> changePassword(String newPassword) async {
+  Future<String> changePassword(
+      {String currentPassword, String newPassword}) async {
+    if (newPassword.isEmpty || newPassword == null)
+      return "All fields are required!";
+
+    var user = _firebaseAuth.currentUser;
+
     try {
+      EmailAuthCredential credential = EmailAuthProvider.credential(
+          email: user.email, password: currentPassword);
+      await _firebaseAuth.currentUser.reauthenticateWithCredential(credential);
       await _firebaseAuth.currentUser.updatePassword(newPassword);
       return 'Password changed successfully!';
     } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
+
+  Future<String> changeEmail({String currentPassword, String newMail}) async {
+    if (newMail.isEmpty || currentPassword.isEmpty)
+      return "All fields are required!";
+
+    var user = _firebaseAuth.currentUser;
+
+    try {
+      EmailAuthCredential credential = EmailAuthProvider.credential(
+          email: user.email, password: currentPassword);
+      await _firebaseAuth.currentUser.reauthenticateWithCredential(credential);
+      await _firebaseAuth.currentUser.updateEmail(newMail);
+      return 'Mail changed successfully!';
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    }
+  }
+
+  Future<String> changeStudentsNumber({String studentsNumber}) async {
+    if (studentsNumber.isEmpty)
+      return "Student's number is required!";
+    else if (studentsNumber.length != 8)
+      return "Student's number must be 8 numbers long!";
+
+    var user = _firebaseAuth.currentUser;
+
+    try {
+      final http.Response response = await http.post(
+        'http://pisekgasper.pythonanywhere.com/api',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'studentsNumber': studentsNumber,
+        }),
+      );
+      if (response.body != "") throw Exception(response.body);
+
+      FirebaseFirestore _db = FirebaseFirestore.instance;
+      await _db
+          .collection('users')
+          .doc(user.uid)
+          .update({'studentsNumber': studentsNumber});
+      return "Student's number changed successfully!";
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future<String> changeFullName({String fullName}) async {
+    if (fullName.isEmpty) return "Name is required!";
+
+    var user = _firebaseAuth.currentUser;
+
+    try {
+      FirebaseFirestore _db = FirebaseFirestore.instance;
+      await _db.collection('users').doc(user.uid).update({'name': fullName});
+      return "Name changed successfully!";
+    } catch (e) {
       return e.message;
     }
   }
