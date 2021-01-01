@@ -13,15 +13,16 @@ class _HomePageState extends State<HomePage> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  String _fullName;
+  String _name;
   String _studentsNumber;
 
   @override
   void initState() {
     super.initState();
-    getStudentsData().then((value) => setState(() {
-          _fullName = value['name'];
-          _studentsNumber = value['studentsNumber'].toString();
+
+    getUserData().then((val) => setState(() {
+          _name = val['name'];
+          _studentsNumber = val['studentsNumber'].toString();
         }));
   }
 
@@ -51,37 +52,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xff2c2f34),
       body: Column(children: [
         NavBar(title: "", back: false, user: true, refresh: false),
-        Container(
-          height: _fullNameFontSize * 4,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: _fullNameFontSize * 2,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        (_fullName != null) ? _fullName : "",
-                        style: _fullNameTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        (_studentsNumber != null) ? _studentsNumber : "",
-                        style: _studentsNumberTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                    ]),
-              ),
-            ],
-          ),
-        ),
         Expanded(
           child: Container(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       width: _screenWidth / 2,
                       height: _screenWidth / 2,
@@ -91,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                       height: _screenWidth / 2,
                       child: HugeButton(icon: Icons.directions_bus_rounded)),
                 ]),
-                Column(children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       width: _screenWidth / 2,
                       height: _screenWidth / 2,
@@ -115,5 +91,17 @@ class _HomePageState extends State<HomePage> {
         (DocumentSnapshot documentSnapshot) =>
             {if (documentSnapshot.exists) result = documentSnapshot.data()});
     return result;
+  }
+
+  Future<Map<String, dynamic>> getUserData() async {
+    Map<String, dynamic> res = new Map<String, String>();
+    await db
+        .collection('users')
+        .doc(auth.currentUser.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) res = documentSnapshot.data();
+    });
+    return res;
   }
 }
