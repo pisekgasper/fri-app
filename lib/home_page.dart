@@ -13,40 +13,14 @@ class _HomePageState extends State<HomePage> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  String _name;
-  String _studentsNumber;
-
   @override
   void initState() {
     super.initState();
-
-    getUserData().then((val) => setState(() {
-          _name = val['name'];
-          _studentsNumber = val['studentsNumber'].toString();
-        }));
   }
 
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
-    final _screenHeight = MediaQuery.of(context).size.height;
-
-    final double _fullNameFontSize = _screenHeight / 25;
-    final double _studentsNumberFontSize = _screenHeight / 40;
-
-    final TextStyle _fullNameTextStyle = TextStyle(
-      fontFamily: 'SF Pro Display',
-      fontSize: _fullNameFontSize,
-      color: Colors.white,
-      fontWeight: FontWeight.w700,
-    );
-
-    final TextStyle _studentsNumberTextStyle = TextStyle(
-      fontFamily: 'SF Pro Display',
-      fontSize: _studentsNumberFontSize,
-      color: Colors.white,
-      fontWeight: FontWeight.w100,
-    );
 
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
@@ -83,25 +57,5 @@ class _HomePageState extends State<HomePage> {
         )
       ]),
     );
-  }
-
-  Future<Map<String, dynamic>> getStudentsData() async {
-    Map<String, dynamic> result = new Map<String, dynamic>();
-    await db.collection('users').doc(auth.currentUser.uid).get().then(
-        (DocumentSnapshot documentSnapshot) =>
-            {if (documentSnapshot.exists) result = documentSnapshot.data()});
-    return result;
-  }
-
-  Future<Map<String, dynamic>> getUserData() async {
-    Map<String, dynamic> res = new Map<String, String>();
-    await db
-        .collection('users')
-        .doc(auth.currentUser.uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) res = documentSnapshot.data();
-    });
-    return res;
   }
 }

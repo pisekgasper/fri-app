@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:fri_app/buttons/round_button.dart';
 import 'package:fri_app/nav_bar.dart';
 
 import 'authentication_service.dart';

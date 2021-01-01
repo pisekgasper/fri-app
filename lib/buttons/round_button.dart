@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:provider/provider.dart';
 import '../account.dart';
-import '../authentication_service.dart';
 
 class RoundButton extends StatefulWidget {
   const RoundButton({this.icon});
