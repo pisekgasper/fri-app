@@ -21,6 +21,17 @@ class AuthenticationService {
           email: email, password: password);
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
+      switch (e.message) {
+        case "There is no user record corresponding to this identifier. The user may have been deleted.":
+          {
+            return "User with this email does not exist.";
+          }
+          break;
+        case "The password is invalid or the user does not have a password.":
+          {
+            return "The password is invalid.";
+          }
+      }
       return e.message;
     }
   }
@@ -82,6 +93,17 @@ class AuthenticationService {
       await _firebaseAuth.currentUser.updatePassword(newPassword);
       return 'Password changed successfully!';
     } on FirebaseAuthException catch (e) {
+      switch (e.message) {
+        case "There is no user record corresponding to this identifier. The user may have been deleted.":
+          {
+            return "User with this email does not exist.";
+          }
+          break;
+        case "The password is invalid or the user does not have a password.":
+          {
+            return "The password is invalid.";
+          }
+      }
       return e.message;
     }
   }
@@ -99,6 +121,17 @@ class AuthenticationService {
       await _firebaseAuth.currentUser.updateEmail(newMail);
       return 'Mail changed successfully!';
     } on FirebaseAuthException catch (e) {
+      switch (e.message) {
+        case "There is no user record corresponding to this identifier. The user may have been deleted.":
+          {
+            return "User with this email does not exist.";
+          }
+          break;
+        case "The password is invalid or the user does not have a password.":
+          {
+            return "The password is invalid.";
+          }
+      }
       return e.message;
     }
   }
