@@ -26,6 +26,8 @@ class _SignInPageState extends State<SignInPage> {
   bool _emailEmpty = false;
   bool _passwordEmpty = false;
 
+  bool _passwordVisibilityToggle = true;
+
   @override
   void initState() {
     super.initState();
@@ -183,7 +185,7 @@ class _SignInPageState extends State<SignInPage> {
                                 fontWeight: FontWeight.w400),
                             controller: _passwordController,
                             autocorrect: false,
-                            obscureText: true,
+                            obscureText: _passwordVisibilityToggle,
                             enableSuggestions: false,
                             cursorColor: const Color(0xffee235a),
                             autovalidateMode: AutovalidateMode.disabled,
@@ -192,9 +194,16 @@ class _SignInPageState extends State<SignInPage> {
                                   horizontal: _formFieldPaddingHorizontal,
                                   vertical: _formFieldPaddingVertical),
                               suffixIcon: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: _formFieldPaddingHorizontal),
-                                  child: Icon(Icons.lock_rounded)),
+                                padding: EdgeInsets.only(
+                                    right: _formFieldPaddingHorizontal),
+                                child: InkWell(
+                                    onTap: () => setState(() =>
+                                        _passwordVisibilityToggle =
+                                            !_passwordVisibilityToggle),
+                                    child: _passwordVisibilityToggle
+                                        ? Icon(Icons.visibility_off_rounded)
+                                        : Icon(Icons.visibility_rounded)),
+                              ),
                               hintText: "Password",
                               hintStyle: TextStyle(
                                   fontFamily: 'SF Pro Text',
@@ -250,10 +259,12 @@ class _SignInPageState extends State<SignInPage> {
                                   email: _emailController.text.trim(),
                                   password: _passwordController.text.trim(),
                                 );
-                        setState(() {
-                          _errorMessage = _error;
-                          _loading = false;
-                        });
+                        if (this.mounted) {
+                          setState(() {
+                            _errorMessage = _error;
+                            _loading = false;
+                          });
+                        }
                       }
                     },
                     child: AccentButton(

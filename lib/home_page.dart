@@ -13,75 +13,25 @@ class _HomePageState extends State<HomePage> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  String _fullName;
-  String _studentsNumber;
-
   @override
   void initState() {
     super.initState();
-    getStudentsData().then((value) => setState(() {
-          _fullName = value['name'];
-          _studentsNumber = value['studentsNumber'].toString();
-        }));
   }
 
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
-    final _screenHeight = MediaQuery.of(context).size.height;
-
-    final double _fullNameFontSize = _screenHeight / 25;
-    final double _studentsNumberFontSize = _screenHeight / 40;
-
-    final TextStyle _fullNameTextStyle = TextStyle(
-      fontFamily: 'SF Pro Display',
-      fontSize: _fullNameFontSize,
-      color: Colors.white,
-      fontWeight: FontWeight.w700,
-    );
-
-    final TextStyle _studentsNumberTextStyle = TextStyle(
-      fontFamily: 'SF Pro Display',
-      fontSize: _studentsNumberFontSize,
-      color: Colors.white,
-      fontWeight: FontWeight.w100,
-    );
 
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: Column(children: [
         NavBar(title: "", back: false, user: true, refresh: false),
-        Container(
-          height: _fullNameFontSize * 4,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: _fullNameFontSize * 2,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        (_fullName != null) ? _fullName : "",
-                        style: _fullNameTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        (_studentsNumber != null) ? _studentsNumber : "",
-                        style: _studentsNumberTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                    ]),
-              ),
-            ],
-          ),
-        ),
         Expanded(
           child: Container(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       width: _screenWidth / 2,
                       height: _screenWidth / 2,
@@ -91,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                       height: _screenWidth / 2,
                       child: HugeButton(icon: Icons.directions_bus_rounded)),
                 ]),
-                Column(children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       width: _screenWidth / 2,
                       height: _screenWidth / 2,
@@ -107,13 +57,5 @@ class _HomePageState extends State<HomePage> {
         )
       ]),
     );
-  }
-
-  Future<Map<String, dynamic>> getStudentsData() async {
-    Map<String, dynamic> result = new Map<String, dynamic>();
-    await db.collection('users').doc(auth.currentUser.uid).get().then(
-        (DocumentSnapshot documentSnapshot) =>
-            {if (documentSnapshot.exists) result = documentSnapshot.data()});
-    return result;
   }
 }

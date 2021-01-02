@@ -37,6 +37,8 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _studentsNumberEmpty = false;
   bool _fullNameEmpty = false;
 
+  bool _passwordVisibilityToggle = true;
+
   @override
   void initState() {
     super.initState();
@@ -208,7 +210,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 fontWeight: FontWeight.w400),
                             controller: _passwordController,
                             autocorrect: false,
-                            obscureText: true,
+                            obscureText: _passwordVisibilityToggle,
                             enableSuggestions: false,
                             cursorColor: const Color(0xffee235a),
                             autovalidateMode: AutovalidateMode.disabled,
@@ -217,9 +219,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                   horizontal: _formFieldPaddingHorizontal,
                                   vertical: _formFieldPaddingVertical),
                               suffixIcon: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: _formFieldPaddingHorizontal),
-                                  child: Icon(Icons.lock_rounded)),
+                                padding: EdgeInsets.only(
+                                    right: _formFieldPaddingHorizontal),
+                                child: InkWell(
+                                    onTap: () => setState(() =>
+                                        _passwordVisibilityToggle =
+                                            !_passwordVisibilityToggle),
+                                    child: _passwordVisibilityToggle
+                                        ? Icon(Icons.visibility_off_rounded)
+                                        : Icon(Icons.visibility_rounded)),
+                              ),
                               hintText: "Password",
                               hintStyle: TextStyle(
                                   fontFamily: 'SF Pro Text',
@@ -351,10 +360,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   width: 30,
                                   color: Colors.transparent,
                                   alignment: Alignment.centerRight,
-                                  child: Icon(Icons.person_rounded),
+                                  child: Icon(Icons.person_pin_rounded),
                                 ),
                               ),
-                              hintText: "Full name",
+                              hintText: "Name",
                               hintStyle: TextStyle(
                                   fontFamily: 'SF Pro Text',
                                   fontSize: _formFontSize,
@@ -415,10 +424,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (_error == "") {
                           Navigator.pop(context);
                         }
-                        setState(() {
-                          _errorMessage = _error;
-                          _loading = false;
-                        });
+                        if (this.mounted) {
+                          setState(() {
+                            _errorMessage = _error;
+                            _loading = false;
+                          });
+                        }
                       }
                     },
                     child: AccentButton(
