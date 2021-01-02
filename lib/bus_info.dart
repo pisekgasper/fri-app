@@ -42,14 +42,6 @@ class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: 'TO ',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: 'CENTER')
-                      ]),
-                    ),
                     FutureBuilder<BusInfo>(
                       future: fetchBusTo(),
                       builder: (context, snapshot) {
@@ -59,6 +51,19 @@ class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: _screenHeight / 110),
+                                  child: RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                          text: 'TO ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(text: 'CENTER')
+                                    ]),
+                                  ),
+                                ),
                                 RichText(
                                   text: TextSpan(children: [
                                     TextSpan(
@@ -146,14 +151,6 @@ class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: 'FROM ',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: 'CENTER')
-                      ]),
-                    ),
                     FutureBuilder<BusInfo>(
                       future: fetchBusFrom(),
                       builder: (context, snapshot) {
@@ -163,6 +160,19 @@ class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: _screenHeight / 110),
+                                  child: RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                          text: 'FROM ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(text: 'CENTER')
+                                    ]),
+                                  ),
+                                ),
                                 RichText(
                                   text: TextSpan(children: [
                                     TextSpan(
