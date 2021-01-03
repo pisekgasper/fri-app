@@ -124,9 +124,6 @@ class _AccountPageState extends State<AccountPage> {
     final _screenWidth = MediaQuery.of(context).size.width;
     final _screenHeight = MediaQuery.of(context).size.height;
 
-    print(_screenHeight);
-    print(_screenWidth);
-
     if (_screenHeight / _screenWidth < 1.75) _userIsABrokeMf = true;
 
     final double _fullNameFontSize = _screenHeight / 40;
@@ -1348,13 +1345,11 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<Map<String, dynamic>> getUserData() async {
     Map<String, dynamic> res = new Map<String, String>();
-    await db
-        .collection('users')
-        .doc(auth.currentUser.uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) res = documentSnapshot.data();
-    });
+    await db.collection('users').doc(auth.currentUser.uid).get().then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) res = documentSnapshot.data();
+      },
+    );
     return res;
   }
 }

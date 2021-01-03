@@ -21,8 +21,11 @@ class _GradesPageState extends State<GradesPage> {
 
     getSubjects().then(
       (val) {
-        _subjects = val;
-        print(_subjects.toString());
+        setState(
+          () {
+            _subjects = val;
+          },
+        );
       },
     );
   }
@@ -79,7 +82,6 @@ class _GradesPageState extends State<GradesPage> {
         );
       },
     );
-    print(res.toString());
     return res;
   }
 }
