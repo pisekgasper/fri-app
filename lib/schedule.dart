@@ -640,17 +640,3 @@ class _TimetablePageState extends State<TimetablePage> {
     return result;
   }
 }
-
-class ButtonCurve extends Curve {
-  @override
-  double transformInternal(double t) {
-    double c5 = (2 * pi) / 4.5;
-    return t == 0
-        ? 0
-        : t == 1
-            ? 1
-            : t < 0.5
-                ? -(pow(2, 20 * t - 10) * sin((20 * t - 11.125) * c5)) / 2
-                : (pow(2, -20 * t + 10) * sin((20 * t - 11.125) * c5)) / 2 + 1;
-  }
-}

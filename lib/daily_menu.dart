@@ -42,7 +42,7 @@ class DailyMenuPage extends StatelessWidget {
                                       boxShape: NeumorphicBoxShape.roundRect(
                                         BorderRadius.circular(30.0),
                                       ),
-                                      depth: 7.0,
+                                      depth: 2.0,
                                     ),
                                     child: Container(
                                       width: _screenWidth - _screenWidth / 8,
@@ -92,7 +92,7 @@ class DailyMenuPage extends StatelessWidget {
                                                       .roundRect(
                                                     BorderRadius.circular(30.0),
                                                   ),
-                                                  depth: -7.0,
+                                                  depth: -2.0,
                                                 ),
                                                 child: Container(
                                                   width: _screenWidth / 5,

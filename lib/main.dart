@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
           lightSource: LightSource.topLeft,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50.0)),
           intensity: 1.0,
-          depth: -7.0,
+          depth: -4.0,
         ),
         darkTheme: NeumorphicThemeData(
           variantColor: const Color(0xffee235a),
