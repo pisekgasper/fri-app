@@ -13,7 +13,7 @@ class _GradesPageState extends State<GradesPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  List<String> _subjects;
+  Map<String, String> _subjects;
 
   @override
   void initState() {
@@ -43,31 +43,38 @@ class _GradesPageState extends State<GradesPage> {
             refresh: false,
           ),
           Column(
-            children: [
-              if (_subjects != null)
-                for (var s in _subjects)
-                  InkWell(
-                    onTap: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GradesInfo(
-                            subject: s.toString(),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Text(s.toString()),
-                  ),
-            ],
+            children: (_subjects != null) ? listSubjects() : [],
           ),
         ],
       ),
     );
   }
 
-  Future<List<String>> getSubjects() async {
-    List<String> res = new List<String>();
+  List<Widget> listSubjects() {
+    List<Widget> list = new List();
+    _subjects.forEach((code, name) {
+      list.add(
+        new InkWell(
+          onTap: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GradesInfo(
+                  subjectCode: code.toString(),
+                  subjectName: name.toString(),
+                ),
+              ),
+            );
+          },
+          child: Text(name.toString()),
+        ),
+      );
+    });
+    return list;
+  }
+
+  Future<Map<String, String>> getSubjects() async {
+    Map<String, String> result = new Map<String, String>();
     await db
         .collection('users')
         .doc(auth.currentUser.uid)
@@ -77,11 +84,11 @@ class _GradesPageState extends State<GradesPage> {
       (QuerySnapshot qs) {
         qs.docs.forEach(
           (el) {
-            res.add(el['subject'].toString());
+            result.addAll({el.id.toString(): el['subject'].toString()});
           },
         );
       },
     );
-    return res;
+    return result;
   }
 }
