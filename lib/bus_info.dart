@@ -19,236 +19,238 @@ class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: Column(
-          // ...
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            NavBar(
-              title: "Avtobus",
-              back: true,
-              user: false,
-              refresh: true,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          NavBar(
+            title: "Avtobus",
+            back: true,
+            user: false,
+            refresh: true,
+          ),
+          Neumorphic(
+            margin: EdgeInsets.symmetric(vertical: 40),
+            style: NeumorphicStyle(
+              boxShape:
+                  NeumorphicBoxShape.roundRect(BorderRadius.circular(30.0)),
+              depth: 7.0,
             ),
-            Neumorphic(
-              margin: EdgeInsets.symmetric(vertical: 40),
-              style: NeumorphicStyle(
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(30.0)),
-                depth: 7.0,
-              ),
-              child: Container(
-                height: _screenHeight / 4,
-                width: _screenWidth - _screenWidth / 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FutureBuilder<BusInfo>(
-                      future: fetchBusTo(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: _screenHeight / 110),
-                                  child: RichText(
-                                    text: TextSpan(children: [
+            child: Container(
+              height: _screenHeight / 4,
+              width: _screenWidth - _screenWidth / 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FutureBuilder<BusInfo>(
+                    future: fetchBusTo(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: _screenHeight / 110),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
                                       TextSpan(
                                           text: 'TO ',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
                                       TextSpan(text: 'CENTER')
-                                    ]),
+                                    ],
                                   ),
                                 ),
-                                RichText(
-                                  text: TextSpan(children: [
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
                                     TextSpan(
                                         text: snapshot.data.busId + " ",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     TextSpan(text: snapshot.data.busNameTo),
-                                  ]),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    for (var x in snapshot.data.arrivals)
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Neumorphic(
-                                            margin: EdgeInsets.only(
-                                                top: 10,
-                                                bottom: 10,
-                                                left: 10,
-                                                right: 10),
-                                            style: NeumorphicStyle(
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                      BorderRadius.circular(
-                                                          30.0)),
-                                              depth: -7.0,
-                                            ),
-                                            child: Container(
-                                                height: _screenHeight / 15,
-                                                width: _screenWidth / 5,
-                                                child: Align(
-                                                  alignment: Alignment.center,
-                                                  child: RichText(
-                                                    text: TextSpan(children: [
-                                                      TextSpan(
-                                                          text: x + " min",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold))
-                                                    ]),
-                                                  ),
-                                                )),
-                                          )
-                                        ],
-                                      )
                                   ],
                                 ),
-                              ],
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
-                        }
-                        return SpinKitWave(
-                          color: Colors.white,
-                          size: _screenHeight / 55,
-                          controller: AnimationController(
-                              vsync: this,
-                              duration: const Duration(milliseconds: 1200)),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  for (var x in snapshot.data.arrivals)
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Neumorphic(
+                                          margin: EdgeInsets.only(
+                                              top: 10,
+                                              bottom: 10,
+                                              left: 10,
+                                              right: 10),
+                                          style: NeumorphicStyle(
+                                            boxShape:
+                                                NeumorphicBoxShape.roundRect(
+                                                    BorderRadius.circular(
+                                                        30.0)),
+                                            depth: -7.0,
+                                          ),
+                                          child: Container(
+                                            height: _screenHeight / 15,
+                                            width: _screenWidth / 5,
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: RichText(
+                                                text: TextSpan(children: [
+                                                  TextSpan(
+                                                      text: x + " min",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold))
+                                                ]),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                ],
+                              ),
+                            ],
+                          ),
                         );
-                      },
-                    )
-                  ],
-                ),
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return SpinKitWave(
+                        color: Colors.white,
+                        size: _screenHeight / 55,
+                        controller: AnimationController(
+                            vsync: this,
+                            duration: const Duration(milliseconds: 1200)),
+                      );
+                    },
+                  )
+                ],
               ),
             ),
-            Neumorphic(
-              margin: EdgeInsets.symmetric(vertical: 40),
-              style: NeumorphicStyle(
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(30.0)),
-                depth: 7.0,
-              ),
-              child: Container(
-                height: _screenHeight / 4,
-                width: _screenWidth - _screenWidth / 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FutureBuilder<BusInfo>(
-                      future: fetchBusFrom(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: _screenHeight / 110),
-                                  child: RichText(
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                          text: 'FROM ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      TextSpan(text: 'CENTER')
-                                    ]),
-                                  ),
-                                ),
-                                RichText(
+          ),
+          Neumorphic(
+            margin: EdgeInsets.symmetric(vertical: 40),
+            style: NeumorphicStyle(
+              boxShape:
+                  NeumorphicBoxShape.roundRect(BorderRadius.circular(30.0)),
+              depth: 7.0,
+            ),
+            child: Container(
+              height: _screenHeight / 4,
+              width: _screenWidth - _screenWidth / 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FutureBuilder<BusInfo>(
+                    future: fetchBusFrom(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: _screenHeight / 110),
+                                child: RichText(
                                   text: TextSpan(children: [
                                     TextSpan(
-                                        text: snapshot.data.busId + " ",
+                                        text: 'FROM ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
-                                    TextSpan(text: snapshot.data.busNameTo),
+                                    TextSpan(text: 'CENTER')
                                   ]),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    for (var x in snapshot.data.arrivals)
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Neumorphic(
-                                            margin: EdgeInsets.only(
-                                                top: 10,
-                                                bottom: 10,
-                                                left: 10,
-                                                right: 10),
-                                            style: NeumorphicStyle(
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                      BorderRadius.circular(
-                                                          30.0)),
-                                              depth: -7.0,
+                              ),
+                              RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: snapshot.data.busId + " ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(text: snapshot.data.busNameTo),
+                                ]),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  for (var x in snapshot.data.arrivals)
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Neumorphic(
+                                          margin: EdgeInsets.only(
+                                              top: 10,
+                                              bottom: 10,
+                                              left: 10,
+                                              right: 10),
+                                          style: NeumorphicStyle(
+                                            boxShape:
+                                                NeumorphicBoxShape.roundRect(
+                                                    BorderRadius.circular(
+                                                        30.0)),
+                                            depth: -7.0,
+                                          ),
+                                          child: Container(
+                                            height: _screenHeight / 15,
+                                            width: _screenWidth / 5,
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: RichText(
+                                                text: TextSpan(children: [
+                                                  TextSpan(
+                                                      text: x + " min",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold))
+                                                ]),
+                                              ),
                                             ),
-                                            child: Container(
-                                                height: _screenHeight / 15,
-                                                width: _screenWidth / 5,
-                                                child: Align(
-                                                  alignment: Alignment.center,
-                                                  child: RichText(
-                                                    text: TextSpan(children: [
-                                                      TextSpan(
-                                                          text: x + " min",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold))
-                                                    ]),
-                                                  ),
-                                                )),
-                                          )
-                                        ],
-                                      )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
-                        }
-                        return SpinKitWave(
-                          color: Colors.white,
-                          size: _screenHeight / 55,
-                          controller: AnimationController(
-                              vsync: this,
-                              duration: const Duration(milliseconds: 1200)),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                ],
+                              ),
+                            ],
+                          ),
                         );
-                      },
-                    )
-                  ],
-                ),
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return SpinKitWave(
+                        color: Colors.white,
+                        size: _screenHeight / 55,
+                        controller: AnimationController(
+                            vsync: this,
+                            duration: const Duration(milliseconds: 1200)),
+                      );
+                    },
+                  )
+                ],
               ),
-            )
-          ]
-          // ...
+            ),
           ),
+        ],
+      ),
     );
   }
 }

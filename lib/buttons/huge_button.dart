@@ -26,6 +26,8 @@ class _HugeButtonState extends State<HugeButton> {
       Navigator.pushNamed(context, '/BusPage');
     } else if (widget.icon == Icons.fastfood_rounded) {
       Navigator.pushNamed(context, '/DailyMenu');
+    } else if (widget.icon == Icons.sticky_note_2_rounded) {
+      Navigator.pushNamed(context, '/Grades');
     }
   }
 
