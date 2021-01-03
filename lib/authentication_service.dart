@@ -72,7 +72,39 @@ class AuthenticationService {
       await _db
           .collection('users')
           .doc(this._firebaseAuth.currentUser.uid)
-          .set({'name': fullName, "studentsNumber": studentsNumber});
+          .set({'name': fullName, "studentsNumber": studentsNumber}).then(
+              (value) {});
+
+      var subjects = new Map<String, dynamic>();
+      for (var _day in [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday'
+      ]) {
+        await _db
+            .collection('timetable')
+            .doc(studentsNumber)
+            .collection(_day)
+            .get()
+            .then((QuerySnapshot querySnapshot) => {
+                  querySnapshot.docs.forEach((element) {
+                    subjects.addAll(
+                        {element.data()['code']: element.data()['full_name']});
+                  })
+                });
+      }
+
+      subjects.forEach((key, value) async {
+        await _db
+            .collection('users')
+            .doc(this._firebaseAuth.currentUser.uid)
+            .collection('subjects')
+            .doc(key)
+            .set({'subject': value});
+      });
+
       return response.body;
     } catch (e) {
       return e.message;
