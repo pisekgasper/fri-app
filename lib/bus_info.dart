@@ -10,10 +10,6 @@ class BusPage extends StatefulWidget {
 }
 
 class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
-  void refresh() {
-    setState(() => {});
-  }
-
   bool _isPressedLeft = false;
   bool _isPressedRight = false;
 

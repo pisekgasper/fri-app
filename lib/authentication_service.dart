@@ -212,4 +212,46 @@ class AuthenticationService {
       return e.message;
     }
   }
+
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
+
+  Future<String> addGrade({
+    String name,
+    String grade,
+    String percent,
+    String subjectId,
+  }) async {
+    if (name.isEmpty || grade.isEmpty)
+      return "Name and grade are required!";
+    else if (!isNumeric(grade))
+      return "Grade must be a number!";
+    else if (int.parse(grade) > 10 || int.parse(grade) < 1)
+      return "Grade must be between 1 and 10!";
+    else if (int.parse(percent) < 0 || int.parse(percent) > 100)
+      return "Percentage not valid!";
+
+    try {
+      print("try");
+      FirebaseFirestore _db = FirebaseFirestore.instance;
+      await _db
+          .collection('grades')
+          .doc(this._firebaseAuth.currentUser.uid)
+          .collection(subjectId)
+          .add(
+        {
+          'name': name,
+          "grade": grade,
+          "percent": percent,
+        },
+      );
+      return "";
+    } catch (e) {
+      return e.message;
+    }
+  }
 }

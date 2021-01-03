@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fri_app/nav_bar.dart';
 
+import 'add_grade.dart';
+
 class GradesInfo extends StatefulWidget {
   final String subjectCode;
   final String subjectName;
@@ -123,6 +125,13 @@ class _GradesInfoState extends State<GradesInfo> {
                           setState(() {
                             _isPressedRight = false;
                           });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddGradePage(
+                                        subjectCode: widget.subjectCode,
+                                        subjectName: widget.subjectName,
+                                      )));
                         },
                         child: Neumorphic(
                           duration: const Duration(milliseconds: 80),
@@ -149,7 +158,7 @@ class _GradesInfoState extends State<GradesInfo> {
                             ),
                             width: _buttonSize,
                             height: _buttonSize,
-                            child: Icon(Icons.refresh_rounded,
+                            child: Icon(Icons.add,
                                 color: Colors.white, size: _iconSize),
                           ),
                         ),
@@ -167,7 +176,7 @@ class _GradesInfoState extends State<GradesInfo> {
               height: _screenHeight / 5,
               width: _screenWidth - _screenWidth / 4,
               child: Column(
-                children: (_grades != null) ? listGrades() : null,
+                children: (_grades != null) ? listGrades() : [],
               ),
             ),
           ),
