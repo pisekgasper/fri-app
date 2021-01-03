@@ -20,6 +20,12 @@ class _HugeButtonState extends State<HugeButton> {
     setState(() {
       _isPressed = true;
     });
+  }
+
+  void _onPointerUp(PointerUpEvent event) {
+    setState(() {
+      _isPressed = false;
+    });
     if (widget.icon == Icons.calendar_today_rounded) {
       Navigator.pushNamed(context, '/Schedule');
     } else if (widget.icon == Icons.directions_bus_rounded) {
@@ -27,12 +33,6 @@ class _HugeButtonState extends State<HugeButton> {
     } else if (widget.icon == Icons.fastfood_rounded) {
       Navigator.pushNamed(context, '/DailyMenu');
     }
-  }
-
-  void _onPointerUp(PointerUpEvent event) {
-    setState(() {
-      _isPressed = false;
-    });
   }
 
   @override
