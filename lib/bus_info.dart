@@ -247,7 +247,7 @@ class _BusPageState extends State<BusPage> with TickerProviderStateMixin {
                             ),
                           );
                         } else if (snapshot.hasError) {
-                          return Text("No bus to center.");
+                          return Text("No bus from center.");
                         }
                         return SpinKitWave(
                           color: Colors.white,
