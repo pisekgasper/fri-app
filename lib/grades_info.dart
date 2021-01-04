@@ -50,6 +50,35 @@ class _GradesInfoState extends State<GradesInfo> {
     final double _iconSizeLeft = _screenWidth / 14;
     final double _buttonPadding = (_screenWidth / 10) / 2;
 
+    final double _verticalPadding = (_screenWidth / 8) / 2;
+
+    final double _formFontSize = _screenHeight / 55;
+    final double _errorFontSize = _screenHeight / 70;
+
+    final double _formFieldWidth =
+        _screenWidth - (_screenWidth / 10) - (_screenWidth / 7);
+    final double _formFieldSpacer = _screenHeight / 50;
+
+    final double _formFieldPaddingHorizontal = (_screenWidth / 7) / 2;
+    final double _formFieldPaddingVertical = (_screenWidth / 7) / 4;
+
+    final double _fullNameFontSize = _screenHeight / 40;
+    final double _studentsNumberFontSize = _screenHeight / 55;
+
+    final TextStyle _fullNameTextStyle = TextStyle(
+      fontFamily: 'SF Pro Display',
+      fontSize: _fullNameFontSize,
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+    );
+
+    final TextStyle _studentsNumberTextStyle = TextStyle(
+      fontFamily: 'SF Pro Display',
+      fontSize: _studentsNumberFontSize,
+      color: Colors.white,
+      fontWeight: FontWeight.w100,
+    );
+
     print(_grades);
 
     return Scaffold(
@@ -169,14 +198,43 @@ class _GradesInfoState extends State<GradesInfo> {
           ),
           Neumorphic(
             style: NeumorphicStyle(
-              depth: 7.0,
+              depth: 4.0,
             ),
-            padding: EdgeInsets.only(top: _screenHeight / 15),
+            margin: EdgeInsets.symmetric(vertical: _verticalPadding),
             child: Container(
-              height: _screenHeight / 5,
-              width: _screenWidth - _screenWidth / 4,
-              child: Column(
-                children: (_grades != null) ? listGrades() : [],
+              width: _screenWidth - (_screenWidth / 10),
+              height: (_screenWidth - (_screenWidth / 10)) / 2.3,
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("hej"),
+                    SizedBox(
+                      height: _formFontSize / 2,
+                    ),
+                    Text("hej"),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // (_grades != null) ? listGrades() : [],
+          Neumorphic(
+            style: NeumorphicStyle(depth: 3.0),
+            child: Container(
+              width: 240.0,
+              height: 70.0,
+              // color: Colors.green,
+              child: NeumorphicButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                style: NeumorphicStyle(depth: 3.0),
+                child: Text(
+                  "hej",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
