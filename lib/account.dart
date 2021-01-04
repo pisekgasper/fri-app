@@ -174,7 +174,7 @@ class _AccountPageState extends State<AccountPage> {
                   visible: !_keyboardOpen,
                   child: Neumorphic(
                     style: NeumorphicStyle(
-                      depth: 7.0,
+                      depth: 4.0,
                     ),
                     margin: EdgeInsets.only(top: _verticalPadding),
                     child: Container(
