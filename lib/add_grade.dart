@@ -98,10 +98,12 @@ class _AddGradePageState extends State<AddGradePage> {
         Expanded(
           child: Center(
             child: Transform(
-              transform: Matrix4.translationValues(
-                  0.0,
-                  -(_statusBarHeight + (_screenHeight / 70) - _buttonSize),
-                  0.0),
+              transform: !(_keyboardOpen)
+                  ? Matrix4.translationValues(
+                      0.0,
+                      -(_statusBarHeight + (_screenHeight / 70) - _buttonSize),
+                      0.0)
+                  : Matrix4.translationValues(0.0, 0.0, 0.0),
               child: Neumorphic(
                 style: NeumorphicStyle(
                   depth: 4.0,
