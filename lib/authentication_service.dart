@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,6 +16,10 @@ class AuthenticationService {
   }
 
   Future<String> signIn({String email, String password}) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none)
+      return "No internet connection!";
+
     if (email.isEmpty || password.isEmpty) return "All fields are required!";
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
@@ -41,6 +46,10 @@ class AuthenticationService {
       String password,
       String studentsNumber,
       String fullName}) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none)
+      return "No internet connection!";
+
     if (email.isEmpty ||
         password.isEmpty ||
         studentsNumber.isEmpty ||
@@ -236,7 +245,6 @@ class AuthenticationService {
       return "Percentage not valid!";
 
     try {
-      print("try");
       FirebaseFirestore _db = FirebaseFirestore.instance;
       await _db
           .collection('grades')

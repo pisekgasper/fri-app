@@ -21,6 +21,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
+    final _screenHeight = MediaQuery.of(context).size.height;
+    final double _statusBarHeight = MediaQuery.of(context).padding.top;
+    final double _buttonSize = _screenWidth / 9;
 
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
@@ -28,6 +31,8 @@ class _HomePageState extends State<HomePage> {
         NavBar(title: "", back: false, user: true, refresh: false),
         Expanded(
           child: Container(
+            transform: Matrix4.translationValues(0.0,
+                -(_statusBarHeight + (_screenHeight / 70) - _buttonSize), 0.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
