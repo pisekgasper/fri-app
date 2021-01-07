@@ -16,9 +16,11 @@ class _RoundButtonState extends State<RoundButton> {
   bool _isPressed = false;
 
   void _onPointerDown(PointerDownEvent event) {
-    setState(() {
-      _isPressed = true;
-    });
+    setState(
+      () {
+        _isPressed = true;
+      },
+    );
   }
 
   @override
@@ -40,15 +42,19 @@ class _RoundButtonState extends State<RoundButton> {
           Navigator.pop(context);
         else if (widget.icon == Icons.person_rounded)
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AccountPage()));
+            context,
+            MaterialPageRoute(
+              builder: (context) => AccountPage(),
+            ),
+          );
         else if (widget.icon == Icons.refresh_rounded) {}
-        // Navigator.popAndPushNamed(context, '/BusPage');
       },
       child: Neumorphic(
         duration: const Duration(milliseconds: 80),
         style: NeumorphicStyle(
-            depth: !_isPressed ? 5.0 : 0.0,
-            boxShape: NeumorphicBoxShape.circle()),
+          depth: !_isPressed ? 5.0 : 0.0,
+          boxShape: NeumorphicBoxShape.circle(),
+        ),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 80),
           decoration: BoxDecoration(

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class HugeButton extends StatefulWidget {
-  const HugeButton({
-    this.icon,
-  });
+  const HugeButton({this.icon});
 
   final IconData icon;
 
@@ -49,7 +47,9 @@ class _HugeButtonState extends State<HugeButton> {
         child: Neumorphic(
           duration: const Duration(milliseconds: 80),
           style: NeumorphicStyle(
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50.0)),
+            boxShape: NeumorphicBoxShape.roundRect(
+              BorderRadius.circular(50.0),
+            ),
             depth: _isPressed ? 0.0 : 5.0,
           ),
           child: AnimatedContainer(

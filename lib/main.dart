@@ -19,9 +19,11 @@ Future<void> main() async {
   // SystemChrome.setEnabledSystemUIOverlays([]);
   SystemChrome.setEnabledSystemUIOverlays(
       SystemUiOverlay.values); // Show transparent status bar
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
+  );
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: NeumorphicApp(
+        debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.light,
         theme: NeumorphicThemeData(
           variantColor: const Color(0xffee235a),

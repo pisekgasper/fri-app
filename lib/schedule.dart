@@ -45,25 +45,35 @@ class _TimetablePageState extends State<TimetablePage>
   void initState() {
     super.initState();
 
-    getStudentsNumber().then((value) {
-      setState(() => _studentsNumber = value);
+    getStudentsNumber().then(
+      (value) {
+        setState(() => _studentsNumber = value);
 
-      getTimetable(_studentsNumber, 0).then((value) => setState(() {
+        getTimetable(_studentsNumber, 0).then(
+          (value) => setState(() {
             _timetable[0].addAll(value);
-          }));
-      getTimetable(_studentsNumber, 1).then((value) => setState(() {
+          }),
+        );
+        getTimetable(_studentsNumber, 1).then(
+          (value) => setState(() {
             _timetable[1].addAll(value);
-          }));
-      getTimetable(_studentsNumber, 2).then((value) => setState(() {
+          }),
+        );
+        getTimetable(_studentsNumber, 2).then(
+          (value) => setState(() {
             _timetable[2].addAll(value);
-          }));
-      getTimetable(_studentsNumber, 3).then((value) => setState(() {
+          }),
+        );
+        getTimetable(_studentsNumber, 3).then(
+          (value) => setState(() {
             _timetable[3].addAll(value);
-          }));
-      getTimetable(_studentsNumber, 4).then((value) {
-        setState(() => _timetable[4].addAll(value));
-      });
-    });
+          }),
+        );
+        getTimetable(_studentsNumber, 4).then((value) {
+          setState(() => _timetable[4].addAll(value));
+        });
+      },
+    );
 
     _selected = (DateTime.now().weekday - 1).toDouble() > 4.0
         ? 0.0
@@ -129,251 +139,283 @@ class _TimetablePageState extends State<TimetablePage>
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: StreamBuilder(
-          stream: Connectivity().onConnectivityChanged,
-          builder: (BuildContext context,
-              AsyncSnapshot<ConnectivityResult> snapshot) {
-            if (!snapshot.hasData) {
-              return Column(
-                children: [
-                  NavBar(title: "", user: false, back: true, refresh: false),
-                  Expanded(
-                    child: Container(
-                      transform: Matrix4.translationValues(
-                          0.0, -(_statusBarHeight + (_screenHeight / 70)), 0.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("No internet connection!"),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            SpinKitWave(
-                              color: Colors.white,
-                              size: 20.0,
-                              controller: AnimationController(
-                                  vsync: this,
-                                  duration: const Duration(milliseconds: 1200)),
-                            ),
-                          ],
-                        ),
-                      ),
+        stream: Connectivity().onConnectivityChanged,
+        builder:
+            (BuildContext context, AsyncSnapshot<ConnectivityResult> snapshot) {
+          if (!snapshot.hasData) {
+            return Column(
+              children: [
+                NavBar(title: "", user: false, back: true, refresh: false),
+                Expanded(
+                  child: Container(
+                    transform: Matrix4.translationValues(
+                      0.0,
+                      -(_statusBarHeight + (_screenHeight / 70)),
+                      0.0,
                     ),
-                  )
-                ],
-              );
-            }
-            var result = snapshot.data;
-            if (result == ConnectivityResult.none) {
-              return Column(
-                children: [
-                  NavBar(title: "", user: false, back: true, refresh: false),
-                  Expanded(
-                    child: Container(
-                      transform: Matrix4.translationValues(
-                          0.0, -(_statusBarHeight + (_screenHeight / 70)), 0.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("No internet connection!"),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            SpinKitWave(
-                              color: Colors.white,
-                              size: 20.0,
-                              controller: AnimationController(
-                                  vsync: this,
-                                  duration: const Duration(milliseconds: 1200)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }
-            return Column(children: [
-              NavBar(
-                  title: "Schedule", back: true, user: false, refresh: false),
-              Stack(
-                  overflow: Overflow.visible,
-                  alignment: Alignment.center,
-                  children: [
-                    Neumorphic(
-                      child: Container(
-                        width: _screenWidth - (_horizontalPadding * 2),
-                        height: _screenHeight / 20,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff2c2f34),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: _dayContainerWidth / 4,
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeInOutCubic,
-                        width: ((_screenWidth - (_horizontalPadding * 2)) / 5),
-                        height:
-                            _screenHeight / 20 + (_screenHeight / 20 * 0.20),
-                        transform: Matrix4.translationValues(
-                            _sliderOffset * _selected, 0.0, 0.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
-                          gradient: LinearGradient(
-                            begin: Alignment(-0.52, -1.0),
-                            end: Alignment(0.38, 1.0),
-                            colors: [
-                              const Color(0xffee235a),
-                              const Color(0xff9f2042)
-                            ],
-                            stops: [0.0, 1.0],
-                          ),
-                          border: Border.all(
-                              width: 1.0, color: const Color(0xffee235a)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xffee235a),
-                              offset: Offset(0, 0),
-                              blurRadius: 7,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: _screenWidth - (_horizontalPadding * 2),
-                      height: _screenHeight / 20.0,
-                      padding: EdgeInsets.only(left: 0, right: 0),
-                      child: Row(
+                    child: Center(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: _screenHeight / 20.0,
-                            width:
-                                (_screenWidth - (4 * _horizontalPadding)) / 5,
-                            child: Text("Mon",
-                                textAlign: TextAlign.center,
-                                style: _dayTextStyle),
+                          Text("No internet connection!"),
+                          SizedBox(
+                            height: 10.0,
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: _screenHeight / 20.0,
-                            width:
-                                (_screenWidth - (4 * _horizontalPadding)) / 5,
-                            child: Text("Tue",
-                                textAlign: TextAlign.center,
-                                style: _dayTextStyle),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: _screenHeight / 20.0,
-                            width:
-                                (_screenWidth - (4 * _horizontalPadding)) / 5,
-                            child: Text("Wed",
-                                textAlign: TextAlign.center,
-                                style: _dayTextStyle),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: _screenHeight / 20.0,
-                            width:
-                                (_screenWidth - (4 * _horizontalPadding)) / 5,
-                            child: Text("Thu",
-                                textAlign: TextAlign.center,
-                                style: _dayTextStyle),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: _screenHeight / 20.0,
-                            width:
-                                (_screenWidth - (4 * _horizontalPadding)) / 5,
-                            child: Text("Fri",
-                                textAlign: TextAlign.center,
-                                style: _dayTextStyle),
+                          SpinKitWave(
+                            color: Colors.white,
+                            size: 20.0,
+                            controller: AnimationController(
+                              vsync: this,
+                              duration: const Duration(milliseconds: 1200),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 150),
-                      width: _daysRowWithPadding,
-                      height: _screenHeight / 20.0,
-                      child: SliderTheme(
-                        child: Slider(
-                          activeColor: Colors.transparent,
-                          inactiveColor: Colors.transparent,
-                          autofocus: false,
-                          value: _selected,
-                          min: 0,
-                          max: 4,
-                          divisions: 4,
-                          label: null,
-                          onChanged: (double value) {
-                            setState(() {
-                              _selected = value;
-                            });
-                          },
-                        ),
-                        data: SliderTheme.of(context).copyWith(
-                            trackHeight: _screenHeight / 20.0,
-                            thumbColor: Colors.transparent,
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 0.0),
-                            overlayColor: Colors.white,
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 0.0)),
-                      ),
-                    )
-                  ]),
-              Expanded(
-                child: Neumorphic(
-                    margin: EdgeInsets.symmetric(vertical: _verticalPadding),
-                    style: NeumorphicStyle(
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(25.0)),
-                      depth: 4.0,
+                  ),
+                )
+              ],
+            );
+          }
+          var result = snapshot.data;
+          if (result == ConnectivityResult.none) {
+            return Column(
+              children: [
+                NavBar(title: "", user: false, back: true, refresh: false),
+                Expanded(
+                  child: Container(
+                    transform: Matrix4.translationValues(
+                      0.0,
+                      -(_statusBarHeight + (_screenHeight / 70)),
+                      0.0,
                     ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("No internet connection!"),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          SpinKitWave(
+                            color: Colors.white,
+                            size: 20.0,
+                            controller: AnimationController(
+                              vsync: this,
+                              duration: const Duration(milliseconds: 1200),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
+          return Column(
+            children: [
+              NavBar(
+                  title: "Schedule", back: true, user: false, refresh: false),
+              Stack(
+                overflow: Overflow.visible,
+                alignment: Alignment.center,
+                children: [
+                  Neumorphic(
                     child: Container(
                       width: _screenWidth - (_horizontalPadding * 2),
-                      padding: EdgeInsets.symmetric(
-                          vertical: _verticalPadding,
-                          horizontal: _horizontalPadding * 1.5),
-                      child: Stack(alignment: Alignment.topRight, children: [
+                      height: _screenHeight / 20,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff2c2f34),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: _dayContainerWidth / 4,
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOutCubic,
+                      width: ((_screenWidth - (_horizontalPadding * 2)) / 5),
+                      height: _screenHeight / 20 + (_screenHeight / 20 * 0.20),
+                      transform: Matrix4.translationValues(
+                        _sliderOffset * _selected,
+                        0.0,
+                        0.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0),
+                        gradient: LinearGradient(
+                          begin: Alignment(-0.52, -1.0),
+                          end: Alignment(0.38, 1.0),
+                          colors: [
+                            const Color(0xffee235a),
+                            const Color(0xff9f2042)
+                          ],
+                          stops: [0.0, 1.0],
+                        ),
+                        border: Border.all(
+                          width: 1.0,
+                          color: const Color(0xffee235a),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xffee235a),
+                            offset: Offset(0, 0),
+                            blurRadius: 7,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: _screenWidth - (_horizontalPadding * 2),
+                    height: _screenHeight / 20.0,
+                    padding: EdgeInsets.only(
+                      left: 0,
+                      right: 0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          height: _screenHeight / 20.0,
+                          width: (_screenWidth - (4 * _horizontalPadding)) / 5,
+                          child: Text(
+                            "Mon",
+                            textAlign: TextAlign.center,
+                            style: _dayTextStyle,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: _screenHeight / 20.0,
+                          width: (_screenWidth - (4 * _horizontalPadding)) / 5,
+                          child: Text(
+                            "Tue",
+                            textAlign: TextAlign.center,
+                            style: _dayTextStyle,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: _screenHeight / 20.0,
+                          width: (_screenWidth - (4 * _horizontalPadding)) / 5,
+                          child: Text(
+                            "Wed",
+                            textAlign: TextAlign.center,
+                            style: _dayTextStyle,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: _screenHeight / 20.0,
+                          width: (_screenWidth - (4 * _horizontalPadding)) / 5,
+                          child: Text(
+                            "Thu",
+                            textAlign: TextAlign.center,
+                            style: _dayTextStyle,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: _screenHeight / 20.0,
+                          width: (_screenWidth - (4 * _horizontalPadding)) / 5,
+                          child: Text(
+                            "Fri",
+                            textAlign: TextAlign.center,
+                            style: _dayTextStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 150),
+                    width: _daysRowWithPadding,
+                    height: _screenHeight / 20.0,
+                    child: SliderTheme(
+                      child: Slider(
+                        activeColor: Colors.transparent,
+                        inactiveColor: Colors.transparent,
+                        autofocus: false,
+                        value: _selected,
+                        min: 0,
+                        max: 4,
+                        divisions: 4,
+                        label: null,
+                        onChanged: (double value) {
+                          setState(() {
+                            _selected = value;
+                          });
+                        },
+                      ),
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: _screenHeight / 20.0,
+                        thumbColor: Colors.transparent,
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 0.0),
+                        overlayColor: Colors.white,
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 0.0),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Expanded(
+                child: Neumorphic(
+                  margin: EdgeInsets.symmetric(
+                    vertical: _verticalPadding,
+                  ),
+                  style: NeumorphicStyle(
+                    boxShape: NeumorphicBoxShape.roundRect(
+                      BorderRadius.circular(25.0),
+                    ),
+                    depth: 4.0,
+                  ),
+                  child: Container(
+                    width: _screenWidth - (_horizontalPadding * 2),
+                    padding: EdgeInsets.symmetric(
+                      vertical: _verticalPadding,
+                      horizontal: _horizontalPadding * 1.5,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.topRight,
+                      children: [
                         Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              for (int i = 7; i <= 21; i++)
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: (_screenWidth -
-                                              (_horizontalPadding * 2) -
-                                              (_horizontalPadding * 3)) *
-                                          0.1,
-                                      child: Text(i.toString() + ":00",
-                                          textAlign: TextAlign.right,
-                                          style: _hoursTextStyle),
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            for (int i = 7; i <= 21; i++)
+                              Row(
+                                children: [
+                                  Container(
+                                    width: (_screenWidth -
+                                            (_horizontalPadding * 2) -
+                                            (_horizontalPadding * 3)) *
+                                        0.1,
+                                    child: Text(
+                                      i.toString() + ":00",
+                                      textAlign: TextAlign.right,
+                                      style: _hoursTextStyle,
                                     ),
-                                    Container(
-                                      width: (_screenWidth -
-                                              (_horizontalPadding * 2) -
-                                              (_horizontalPadding * 3)) *
-                                          0.85,
-                                      height: 1,
-                                      color: Colors.white.withOpacity(0.2),
-                                    ),
-                                  ],
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                ),
-                            ]),
+                                  ),
+                                  Container(
+                                    width: (_screenWidth -
+                                            (_horizontalPadding * 2) -
+                                            (_horizontalPadding * 3)) *
+                                        0.85,
+                                    height: 1,
+                                    color: Colors.white.withOpacity(0.2),
+                                  ),
+                                ],
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                              ),
+                          ],
+                        ),
                         FractionallySizedBox(
                           key: _fractionallySizedBox,
                           heightFactor: 1.0,
@@ -384,7 +426,8 @@ class _TimetablePageState extends State<TimetablePage>
                                     (_horizontalPadding * 3)) *
                                 0.85,
                             margin: EdgeInsets.symmetric(
-                                vertical: (_subjectFontSmall + 1.0) / 2),
+                              vertical: (_subjectFontSmall + 1.0) / 2,
+                            ),
                             child: Stack(
                               alignment: Alignment.centerLeft,
                               children: (_timetable[_selected] != null)
@@ -396,11 +439,15 @@ class _TimetablePageState extends State<TimetablePage>
                             ),
                           ),
                         )
-                      ]),
-                    )),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ]);
-          }),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -415,16 +462,18 @@ class _TimetablePageState extends State<TimetablePage>
     final double _subjectFontBig = _screenHeight / 60;
 
     final TextStyle _subjectTextStyleSmall = TextStyle(
-        fontFamily: 'SF Pro Text',
-        fontSize: _subjectFontSmall,
-        color: Colors.white,
-        fontWeight: FontWeight.w300);
+      fontFamily: 'SF Pro Text',
+      fontSize: _subjectFontSmall,
+      color: Colors.white,
+      fontWeight: FontWeight.w300,
+    );
 
     final TextStyle _subjectTextStyleBig = TextStyle(
-        fontFamily: 'SF Pro Display',
-        fontSize: _subjectFontBig,
-        color: Colors.white,
-        fontWeight: FontWeight.w700);
+      fontFamily: 'SF Pro Display',
+      fontSize: _subjectFontBig,
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+    );
 
     List<Widget> result = new List<Widget>();
     bool smaller = false;
@@ -465,15 +514,22 @@ class _TimetablePageState extends State<TimetablePage>
             },
             child: Neumorphic(
               margin: (smaller && left)
-                  ? EdgeInsets.only(left: _subjectWidth * 0.5)
+                  ? EdgeInsets.only(
+                      left: _subjectWidth * 0.5,
+                    )
                   : (!smaller)
-                      ? EdgeInsets.only(left: _subjectWidth * 0.1)
-                      : EdgeInsets.only(left: 0.0),
+                      ? EdgeInsets.only(
+                          left: _subjectWidth * 0.1,
+                        )
+                      : EdgeInsets.only(
+                          left: 0.0,
+                        ),
               duration: Duration(milliseconds: 0),
               curve: Curves.easeInOutExpo,
               style: NeumorphicStyle(
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(20.0)),
+                boxShape: NeumorphicBoxShape.roundRect(
+                  BorderRadius.circular(20.0),
+                ),
                 depth: (barray[i]) ? 2.0 : -2.0,
               ),
               child: Container(
@@ -505,8 +561,11 @@ class _TimetablePageState extends State<TimetablePage>
                               alignment: Alignment.centerLeft,
                               padding: (smaller)
                                   ? EdgeInsets.only(
-                                      left: _horizontalPadding / 2)
-                                  : EdgeInsets.only(left: _horizontalPadding),
+                                      left: _horizontalPadding / 2,
+                                    )
+                                  : EdgeInsets.only(
+                                      left: _horizontalPadding,
+                                    ),
                               child: Text(
                                 (smaller)
                                     ? _timetable[_selected][i]['classroom']
@@ -627,24 +686,24 @@ class _TimetablePageState extends State<TimetablePage>
         .doc(_studentsNumber)
         .collection(day)
         .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((element) {
-                result.add(element.data());
-              })
-            });
+        .then(
+          (QuerySnapshot querySnapshot) => {
+            querySnapshot.docs.forEach((element) {
+              result.add(element.data());
+            })
+          },
+        );
     return result;
   }
 
   Future<String> getStudentsNumber() async {
     String result = "";
-    await db
-        .collection('users')
-        .doc(auth.currentUser.uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) => {
-              if (documentSnapshot.exists)
-                result = documentSnapshot.data()['studentsNumber'].toString()
-            });
+    await db.collection('users').doc(auth.currentUser.uid).get().then(
+          (DocumentSnapshot documentSnapshot) => {
+            if (documentSnapshot.exists)
+              result = documentSnapshot.data()['studentsNumber'].toString()
+          },
+        );
     return result;
   }
 }

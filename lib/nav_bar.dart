@@ -28,17 +28,21 @@ class NavBar extends StatelessWidget {
       width: _screenWidth,
       color: Colors.transparent,
       margin: EdgeInsets.only(
-          top: _statusBarHeight + (_screenHeight / 70), bottom: _buttonPadding),
+        top: _statusBarHeight + (_screenHeight / 70),
+        bottom: _buttonPadding,
+      ),
       height: _screenWidth / 9,
       child: Stack(
         children: [
           Visibility(
             visible: back,
             child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                    padding: EdgeInsets.only(left: _buttonPadding),
-                    child: RoundButton(icon: Icons.chevron_left_rounded))),
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: _buttonPadding),
+                child: RoundButton(icon: Icons.chevron_left_rounded),
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.center,
@@ -58,8 +62,9 @@ class NavBar extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                  padding: EdgeInsets.only(right: _buttonPadding),
-                  child: RoundButton(icon: Icons.person_rounded)),
+                padding: EdgeInsets.only(right: _buttonPadding),
+                child: RoundButton(icon: Icons.person_rounded),
+              ),
             ),
           ),
           Visibility(
@@ -67,8 +72,9 @@ class NavBar extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                  padding: EdgeInsets.only(right: _buttonPadding),
-                  child: RoundButton(icon: Icons.refresh_rounded)),
+                padding: EdgeInsets.only(right: _buttonPadding),
+                child: RoundButton(icon: Icons.refresh_rounded),
+              ),
             ),
           )
         ],

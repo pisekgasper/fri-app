@@ -77,10 +77,12 @@ class _AccountPageState extends State<AccountPage>
   @override
   void initState() {
     super.initState();
-    getUserData().then((val) => setState(() {
-          _name = val['name'];
-          _studentsNumber = val['studentsNumber'].toString();
-        }));
+    getUserData().then(
+      (val) => setState(() {
+        _name = val['name'];
+        _studentsNumber = val['studentsNumber'].toString();
+      }),
+    );
     _emailFocus.addListener(_onFocus);
     _emailCurrentPasswordFocus.addListener(_onFocus);
     _currentPasswordFocus.addListener(_onFocus);
@@ -165,576 +167,625 @@ class _AccountPageState extends State<AccountPage>
     return Scaffold(
       backgroundColor: const Color(0xff2c2f34),
       body: StreamBuilder(
-          stream: Connectivity().onConnectivityChanged,
-          builder: (BuildContext context,
-              AsyncSnapshot<ConnectivityResult> snapshot) {
-            if (!snapshot.hasData) {
-              return Column(
-                children: [
-                  NavBar(title: "", user: false, back: true, refresh: false),
-                  Expanded(
-                    child: Container(
-                      transform: Matrix4.translationValues(
-                          0.0, -(_statusBarHeight + (_screenHeight / 70)), 0.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("No internet connection!"),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            SpinKitWave(
-                              color: Colors.white,
-                              size: 20.0,
-                              controller: AnimationController(
-                                  vsync: this,
-                                  duration: const Duration(milliseconds: 1200)),
-                            ),
-                          ],
-                        ),
+        stream: Connectivity().onConnectivityChanged,
+        builder:
+            (BuildContext context, AsyncSnapshot<ConnectivityResult> snapshot) {
+          if (!snapshot.hasData) {
+            return Column(
+              children: [
+                NavBar(title: "", user: false, back: true, refresh: false),
+                Expanded(
+                  child: Container(
+                    transform: Matrix4.translationValues(
+                        0.0, -(_statusBarHeight + (_screenHeight / 70)), 0.0),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("No internet connection!"),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          SpinKitWave(
+                            color: Colors.white,
+                            size: 20.0,
+                            controller: AnimationController(
+                                vsync: this,
+                                duration: const Duration(milliseconds: 1200)),
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
-              );
-            }
-            var result = snapshot.data;
-            if (result == ConnectivityResult.none) {
-              return Column(
-                children: [
-                  NavBar(title: "", user: false, back: true, refresh: false),
-                  Expanded(
-                    child: Container(
-                      transform: Matrix4.translationValues(
-                          0.0, -(_statusBarHeight + (_screenHeight / 70)), 0.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("No internet connection!"),
-                            SizedBox(
-                              height: 10.0,
+                  ),
+                )
+              ],
+            );
+          }
+          var result = snapshot.data;
+          if (result == ConnectivityResult.none) {
+            return Column(
+              children: [
+                NavBar(title: "", user: false, back: true, refresh: false),
+                Expanded(
+                  child: Container(
+                    transform: Matrix4.translationValues(
+                      0.0,
+                      -(_statusBarHeight + (_screenHeight / 70)),
+                      0.0,
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("No internet connection!"),
+                          SizedBox(height: 10.0),
+                          SpinKitWave(
+                            color: Colors.white,
+                            size: 20.0,
+                            controller: AnimationController(
+                              vsync: this,
+                              duration: const Duration(milliseconds: 1200),
                             ),
-                            SpinKitWave(
-                              color: Colors.white,
-                              size: 20.0,
-                              controller: AnimationController(
-                                  vsync: this,
-                                  duration: const Duration(milliseconds: 1200)),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
-              );
-            }
-            return Column(children: [
+                  ),
+                )
+              ],
+            );
+          }
+          return Column(
+            children: [
               Visibility(
-                  visible: !(_keyboardOpen && _userIsABrokeMf),
-                  child: NavBar(
-                      title: "Account",
-                      back: true,
-                      user: false,
-                      refresh: false)),
+                visible: !(_keyboardOpen && _userIsABrokeMf),
+                child: NavBar(
+                    title: "Account", back: true, user: false, refresh: false),
+              ),
               Expanded(
                 child: Center(
                   child: Container(
-                    child: Column(children: [
-                      Visibility(
-                        visible: !_keyboardOpen,
-                        child: Neumorphic(
-                          style: NeumorphicStyle(
-                            depth: 4.0,
-                          ),
-                          margin: EdgeInsets.only(top: _verticalPadding),
-                          child: Container(
-                            width: _screenWidth - (_screenWidth / 10),
-                            height: (_screenWidth - (_screenWidth / 10)) / 2.3,
-                            padding: EdgeInsets.only(
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: !_keyboardOpen,
+                          child: Neumorphic(
+                            style: NeumorphicStyle(
+                              depth: 4.0,
+                            ),
+                            margin: EdgeInsets.only(top: _verticalPadding),
+                            child: Container(
+                              width: _screenWidth - (_screenWidth / 10),
+                              height:
+                                  (_screenWidth - (_screenWidth / 10)) / 2.3,
+                              padding: EdgeInsets.only(
                                 left: _formFieldPaddingHorizontal * 1.5,
                                 right: _formFieldPaddingHorizontal,
                                 top: _formFieldPaddingHorizontal,
-                                bottom: _formFieldPaddingHorizontal),
-                            child: Column(children: [
-                              Expanded(
-                                flex: 1,
-                                child: Row(children: [
+                                bottom: _formFieldPaddingHorizontal,
+                              ),
+                              child: Column(
+                                children: [
                                   Expanded(
-                                    flex: 4,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    flex: 1,
+                                    child: Row(
                                       children: [
-                                        Text((_name != null) ? _name : "",
-                                            textAlign: TextAlign.left,
-                                            style: _fullNameTextStyle),
-                                        SizedBox(
-                                          height: _formFontSize / 2,
+                                        Expanded(
+                                          flex: 4,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                (_name != null) ? _name : "",
+                                                textAlign: TextAlign.left,
+                                                style: _fullNameTextStyle,
+                                              ),
+                                              SizedBox(
+                                                  height: _formFontSize / 2),
+                                              Text(
+                                                (auth.currentUser != null)
+                                                    ? auth.currentUser.email
+                                                    : "",
+                                                textAlign: TextAlign.left,
+                                                style: _studentsNumberTextStyle,
+                                              ),
+                                              SizedBox(
+                                                  height: _formFontSize / 2),
+                                              Text(
+                                                (_studentsNumber != null)
+                                                    ? _studentsNumber
+                                                    : "",
+                                                textAlign: TextAlign.left,
+                                                style: _studentsNumberTextStyle,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        Text(
-                                            (auth.currentUser != null)
-                                                ? auth.currentUser.email
-                                                : "",
-                                            textAlign: TextAlign.left,
-                                            style: _studentsNumberTextStyle),
-                                        SizedBox(
-                                          height: _formFontSize / 2,
-                                        ),
-                                        Text(
-                                            (_studentsNumber != null)
-                                                ? _studentsNumber
-                                                : "",
-                                            textAlign: TextAlign.left,
-                                            style: _studentsNumberTextStyle),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Listener(
+                                              onPointerUp:
+                                                  (PointerUpEvent event) {
+                                                setState(() {
+                                                  _logoutPressed = false;
+                                                });
+                                                context
+                                                    .read<
+                                                        AuthenticationService>()
+                                                    .signOut();
+                                                Navigator.popUntil(context,
+                                                    (route) => route.isFirst);
+                                              },
+                                              onPointerDown:
+                                                  (PointerDownEvent event) {
+                                                setState(() {
+                                                  _logoutPressed = true;
+                                                });
+                                              },
+                                              child: Neumorphic(
+                                                style: NeumorphicStyle(
+                                                  boxShape: NeumorphicBoxShape
+                                                      .roundRect(
+                                                          BorderRadius.circular(
+                                                              30.0)),
+                                                  depth: _logoutPressed
+                                                      ? 0.0
+                                                      : 4.0,
+                                                ),
+                                                child: AnimatedContainer(
+                                                  height: _buttonSize * 1.2,
+                                                  width: _buttonSize * 1.2,
+                                                  alignment: Alignment.center,
+                                                  duration: const Duration(
+                                                      milliseconds: 80),
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment(0.94, 0.92),
+                                                      end: Alignment(
+                                                          -0.88, -0.89),
+                                                      colors: (_logoutPressed)
+                                                          ? [
+                                                              const Color(
+                                                                  0xff2c2f34),
+                                                              const Color(
+                                                                  0xff2c2f34)
+                                                            ]
+                                                          : [
+                                                              const Color(
+                                                                  0xff282a2f),
+                                                              const Color(
+                                                                  0xff2f3238)
+                                                            ],
+                                                      stops: [0.0, 1.0],
+                                                    ),
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.logout,
+                                                    size: _formFontSize * 1.5,
+                                                    color: Colors.white
+                                                        .withOpacity(1.0),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Listener(
-                                        onPointerUp: (PointerUpEvent event) {
-                                          setState(() {
-                                            _logoutPressed = false;
-                                          });
-                                          context
-                                              .read<AuthenticationService>()
-                                              .signOut();
-                                          Navigator.popUntil(context,
-                                              (route) => route.isFirst);
-                                        },
-                                        onPointerDown:
-                                            (PointerDownEvent event) {
-                                          setState(() {
-                                            _logoutPressed = true;
-                                          });
-                                        },
-                                        child: Neumorphic(
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            depth: _logoutPressed ? 0.0 : 4.0,
-                                          ),
-                                          child: AnimatedContainer(
-                                            height: _buttonSize * 1.2,
-                                            width: _buttonSize * 1.2,
-                                            alignment: Alignment.center,
-                                            duration: const Duration(
-                                                milliseconds: 80),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment(0.94, 0.92),
-                                                end: Alignment(-0.88, -0.89),
-                                                colors: (_logoutPressed)
-                                                    ? [
-                                                        const Color(0xff2c2f34),
-                                                        const Color(0xff2c2f34)
-                                                      ]
-                                                    : [
-                                                        const Color(0xff282a2f),
-                                                        const Color(0xff2f3238)
-                                                      ],
-                                                stops: [0.0, 1.0],
-                                              ),
-                                            ),
-                                            child: Icon(
-                                              Icons.logout,
-                                              size: _formFontSize * 1.5,
-                                              color:
-                                                  Colors.white.withOpacity(1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ]),
+                                ],
                               ),
-                            ]),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Neumorphic(
-                          style: NeumorphicStyle(
-                            depth: 4.0,
-                          ),
-                          margin: EdgeInsets.only(
-                              bottom: _verticalPadding, top: _verticalPadding),
-                          child: Container(
-                            width: _screenWidth - (_screenWidth / 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: _verticalPadding * 2),
-                                  color: Colors.transparent,
-                                  width: _formFieldWidth,
-                                  height: _buttonSize * 1.2,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Listener(
-                                        onPointerUp: (PointerUpEvent event) =>
-                                            setState(() {
-                                          _selected = 0;
+                        Expanded(
+                          child: Neumorphic(
+                            style: NeumorphicStyle(
+                              depth: 4.0,
+                            ),
+                            margin: EdgeInsets.only(
+                              bottom: _verticalPadding,
+                              top: _verticalPadding,
+                            ),
+                            child: Container(
+                              width: _screenWidth - (_screenWidth / 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      top: _verticalPadding * 2,
+                                    ),
+                                    color: Colors.transparent,
+                                    width: _formFieldWidth,
+                                    height: _buttonSize * 1.2,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Listener(
+                                          onPointerUp: (PointerUpEvent event) =>
+                                              setState(() {
+                                            _selected = 0;
 
-                                          _currentPasswordController.clear();
-                                          _currentPasswordFocused = false;
-                                          _currentPasswordEmpty = false;
+                                            _currentPasswordController.clear();
+                                            _currentPasswordFocused = false;
+                                            _currentPasswordEmpty = false;
 
-                                          _newPasswordController.clear();
-                                          _newPasswordFocused = false;
-                                          _newPasswordEmpty = false;
+                                            _newPasswordController.clear();
+                                            _newPasswordFocused = false;
+                                            _newPasswordEmpty = false;
 
-                                          _studentsNumberController.clear();
-                                          _studentsNumberFocused = false;
-                                          _studentsNumberEmpty = false;
+                                            _studentsNumberController.clear();
+                                            _studentsNumberFocused = false;
+                                            _studentsNumberEmpty = false;
 
-                                          _fullNameController.clear();
-                                          _fullNameFocused = false;
-                                          _fullNameEmpty = false;
+                                            _fullNameController.clear();
+                                            _fullNameFocused = false;
+                                            _fullNameEmpty = false;
 
-                                          _errorMessage = "";
-                                        }),
-                                        child: Neumorphic(
-                                          duration:
-                                              const Duration(milliseconds: 80),
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            depth:
-                                                (_selected == 0) ? -4.0 : 4.0,
-                                          ),
-                                          child: AnimatedContainer(
-                                            height: _buttonSize * 1.2,
-                                            width: _buttonSize * 1.2,
-                                            alignment: Alignment.center,
+                                            _errorMessage = "";
+                                          }),
+                                          child: Neumorphic(
                                             duration: const Duration(
                                                 milliseconds: 80),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment(0.94, 0.92),
-                                                end: Alignment(-0.88, -0.89),
-                                                colors: (_selected == 0)
-                                                    ? [
-                                                        const Color(0xff2c2f34),
-                                                        const Color(0xff2c2f34)
-                                                      ]
-                                                    : [
-                                                        const Color(0xff282a2f),
-                                                        const Color(0xff2f3238)
-                                                      ],
-                                                stops: [0.0, 1.0],
+                                            style: NeumorphicStyle(
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
+                                                BorderRadius.circular(30.0),
                                               ),
+                                              depth:
+                                                  (_selected == 0) ? -4.0 : 4.0,
                                             ),
-                                            child: Icon(
-                                              Icons.mail_rounded,
-                                              size: _formFontSize * 1.2,
-                                              color:
-                                                  Colors.white.withOpacity(1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Listener(
-                                        onPointerUp: (PointerUpEvent event) =>
-                                            setState(() {
-                                          _selected = 1;
-
-                                          _emailController.clear();
-                                          _emailFocused = false;
-                                          _emailEmpty = false;
-
-                                          _emailCurrentPasswordController
-                                              .clear();
-                                          _emailCurrentPasswordFocused = false;
-                                          _emailCurrentPasswordEmpty = false;
-
-                                          _studentsNumberController.clear();
-                                          _studentsNumberFocused = false;
-                                          _studentsNumberEmpty = false;
-
-                                          _fullNameController.clear();
-                                          _fullNameFocused = false;
-                                          _fullNameEmpty = false;
-
-                                          _errorMessage = "";
-                                        }),
-                                        child: Neumorphic(
-                                          duration:
-                                              const Duration(milliseconds: 80),
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            depth:
-                                                (_selected == 1) ? -4.0 : 4.0,
-                                          ),
-                                          child: AnimatedContainer(
-                                            height: _buttonSize * 1.2,
-                                            width: _buttonSize * 1.2,
-                                            alignment: Alignment.center,
-                                            duration: const Duration(
-                                                milliseconds: 80),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment(0.94, 0.92),
-                                                end: Alignment(-0.88, -0.89),
-                                                colors: (_selected == 1)
-                                                    ? [
-                                                        const Color(0xff2c2f34),
-                                                        const Color(0xff2c2f34)
-                                                      ]
-                                                    : [
-                                                        const Color(0xff282a2f),
-                                                        const Color(0xff2f3238)
-                                                      ],
-                                                stops: [0.0, 1.0],
-                                              ),
-                                            ),
-                                            child: Icon(
-                                              Icons.lock_rounded,
-                                              size: _formFontSize * 1.2,
-                                              color:
-                                                  Colors.white.withOpacity(1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Listener(
-                                        onPointerUp: (PointerUpEvent event) =>
-                                            setState(() {
-                                          _selected = 2;
-
-                                          _emailController.clear();
-                                          _emailFocused = false;
-                                          _emailEmpty = false;
-
-                                          _emailCurrentPasswordController
-                                              .clear();
-                                          _emailCurrentPasswordFocused = false;
-                                          _emailCurrentPasswordEmpty = false;
-
-                                          _currentPasswordController.clear();
-                                          _currentPasswordFocused = false;
-                                          _currentPasswordEmpty = false;
-
-                                          _newPasswordController.clear();
-                                          _newPasswordFocused = false;
-                                          _newPasswordEmpty = false;
-
-                                          _fullNameController.clear();
-                                          _fullNameFocused = false;
-                                          _fullNameEmpty = false;
-
-                                          _errorMessage = "";
-                                        }),
-                                        child: Neumorphic(
-                                          duration:
-                                              const Duration(milliseconds: 80),
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            depth:
-                                                (_selected == 2) ? -4.0 : 4.0,
-                                          ),
-                                          child: AnimatedContainer(
-                                            height: _buttonSize * 1.2,
-                                            width: _buttonSize * 1.2,
-                                            alignment: Alignment.center,
-                                            duration: const Duration(
-                                                milliseconds: 80),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment(0.94, 0.92),
-                                                end: Alignment(-0.88, -0.89),
-                                                colors: (_selected == 2)
-                                                    ? [
-                                                        const Color(0xff2c2f34),
-                                                        const Color(0xff2c2f34)
-                                                      ]
-                                                    : [
-                                                        const Color(0xff282a2f),
-                                                        const Color(0xff2f3238)
-                                                      ],
-                                                stops: [0.0, 1.0],
-                                              ),
-                                            ),
-                                            child: FaIcon(
-                                              FontAwesomeIcons.hashtag,
-                                              size: _formFontSize * 1.2,
-                                              color:
-                                                  Colors.white.withOpacity(1.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Listener(
-                                        onPointerUp: (PointerUpEvent event) =>
-                                            setState(() {
-                                          _selected = 3;
-
-                                          _emailController.clear();
-                                          _emailFocused = false;
-                                          _emailEmpty = false;
-
-                                          _emailCurrentPasswordController
-                                              .clear();
-                                          _emailCurrentPasswordFocused = false;
-                                          _emailCurrentPasswordEmpty = false;
-
-                                          _currentPasswordController.clear();
-                                          _currentPasswordFocused = false;
-                                          _currentPasswordEmpty = false;
-
-                                          _newPasswordController.clear();
-                                          _newPasswordFocused = false;
-                                          _newPasswordEmpty = false;
-
-                                          _studentsNumberController.clear();
-                                          _studentsNumberFocused = false;
-                                          _studentsNumberEmpty = false;
-
-                                          _errorMessage = "";
-                                        }),
-                                        child: Neumorphic(
-                                          duration:
-                                              const Duration(milliseconds: 80),
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                                    BorderRadius.circular(
-                                                        30.0)),
-                                            depth:
-                                                (_selected == 3) ? -4.0 : 4.0,
-                                          ),
-                                          child: AnimatedContainer(
-                                            height: _buttonSize * 1.2,
-                                            width: _buttonSize * 1.2,
-                                            alignment: Alignment.center,
-                                            duration: const Duration(
-                                                milliseconds: 80),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment(0.94, 0.92),
-                                                end: Alignment(-0.88, -0.89),
-                                                colors: (_selected == 3)
-                                                    ? [
-                                                        const Color(0xff2c2f34),
-                                                        const Color(0xff2c2f34)
-                                                      ]
-                                                    : [
-                                                        const Color(0xff282a2f),
-                                                        const Color(0xff2f3238)
-                                                      ],
-                                                stops: [0.0, 1.0],
-                                              ),
-                                            ),
-                                            child: Icon(
-                                              Icons.person_pin_rounded,
-                                              color:
-                                                  Colors.white.withOpacity(1.0),
-                                              size: _formFontSize * 1.2,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: (_selected == 0),
-                                  child: Expanded(
-                                    child: Form(
-                                      key: _emailFormKey,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Neumorphic(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                style: NeumorphicStyle(
-                                                  depth:
-                                                      _emailCurrentPasswordFocused
-                                                          ? -7.0
-                                                          : 4.0,
+                                            child: AnimatedContainer(
+                                              height: _buttonSize * 1.2,
+                                              width: _buttonSize * 1.2,
+                                              alignment: Alignment.center,
+                                              duration: const Duration(
+                                                  milliseconds: 80),
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: Alignment(0.94, 0.92),
+                                                  end: Alignment(-0.88, -0.89),
+                                                  colors: (_selected == 0)
+                                                      ? [
+                                                          const Color(
+                                                              0xff2c2f34),
+                                                          const Color(
+                                                              0xff2c2f34)
+                                                        ]
+                                                      : [
+                                                          const Color(
+                                                              0xff282a2f),
+                                                          const Color(
+                                                              0xff2f3238)
+                                                        ],
+                                                  stops: [0.0, 1.0],
                                                 ),
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.0),
-                                                  width: _formFieldWidth,
-                                                  child: TextFormField(
-                                                    focusNode:
-                                                        _emailCurrentPasswordFocus,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    textAlignVertical:
-                                                        TextAlignVertical
-                                                            .center,
-                                                    autofocus: false,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            'SF Pro Text',
-                                                        fontSize: _formFontSize,
-                                                        color: Colors.white
-                                                            .withOpacity(1.0),
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                    controller:
-                                                        _emailCurrentPasswordController,
-                                                    autocorrect: false,
-                                                    obscureText:
-                                                        _passwordVisibilityToggle3,
-                                                    enableSuggestions: false,
-                                                    cursorColor:
-                                                        const Color(0xffee235a),
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .disabled,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  _formFieldPaddingHorizontal,
-                                                              vertical:
-                                                                  _formFieldPaddingVertical),
-                                                      suffixIcon: Padding(
-                                                        padding: EdgeInsets.only(
-                                                            right:
-                                                                _formFieldPaddingHorizontal),
-                                                        child: InkWell(
-                                                            onTap: () => setState(() =>
-                                                                _passwordVisibilityToggle3 =
-                                                                    !_passwordVisibilityToggle3),
-                                                            child: _passwordVisibilityToggle3
-                                                                ? Icon(Icons
-                                                                    .visibility_off_rounded)
-                                                                : Icon(Icons
-                                                                    .visibility_rounded)),
-                                                      ),
-                                                      hintText:
-                                                          "Current password",
-                                                      hintStyle: TextStyle(
+                                              ),
+                                              child: Icon(
+                                                Icons.mail_rounded,
+                                                size: _formFontSize * 1.2,
+                                                color: Colors.white
+                                                    .withOpacity(1.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Listener(
+                                          onPointerUp: (PointerUpEvent event) =>
+                                              setState(() {
+                                            _selected = 1;
+
+                                            _emailController.clear();
+                                            _emailFocused = false;
+                                            _emailEmpty = false;
+
+                                            _emailCurrentPasswordController
+                                                .clear();
+                                            _emailCurrentPasswordFocused =
+                                                false;
+                                            _emailCurrentPasswordEmpty = false;
+
+                                            _studentsNumberController.clear();
+                                            _studentsNumberFocused = false;
+                                            _studentsNumberEmpty = false;
+
+                                            _fullNameController.clear();
+                                            _fullNameFocused = false;
+                                            _fullNameEmpty = false;
+
+                                            _errorMessage = "";
+                                          }),
+                                          child: Neumorphic(
+                                            duration: const Duration(
+                                                milliseconds: 80),
+                                            style: NeumorphicStyle(
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
+                                                BorderRadius.circular(30.0),
+                                              ),
+                                              depth:
+                                                  (_selected == 1) ? -4.0 : 4.0,
+                                            ),
+                                            child: AnimatedContainer(
+                                              height: _buttonSize * 1.2,
+                                              width: _buttonSize * 1.2,
+                                              alignment: Alignment.center,
+                                              duration: const Duration(
+                                                  milliseconds: 80),
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: Alignment(0.94, 0.92),
+                                                  end: Alignment(-0.88, -0.89),
+                                                  colors: (_selected == 1)
+                                                      ? [
+                                                          const Color(
+                                                              0xff2c2f34),
+                                                          const Color(
+                                                              0xff2c2f34)
+                                                        ]
+                                                      : [
+                                                          const Color(
+                                                              0xff282a2f),
+                                                          const Color(
+                                                              0xff2f3238)
+                                                        ],
+                                                  stops: [0.0, 1.0],
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                Icons.lock_rounded,
+                                                size: _formFontSize * 1.2,
+                                                color: Colors.white
+                                                    .withOpacity(1.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Listener(
+                                          onPointerUp: (PointerUpEvent event) =>
+                                              setState(() {
+                                            _selected = 2;
+
+                                            _emailController.clear();
+                                            _emailFocused = false;
+                                            _emailEmpty = false;
+
+                                            _emailCurrentPasswordController
+                                                .clear();
+                                            _emailCurrentPasswordFocused =
+                                                false;
+                                            _emailCurrentPasswordEmpty = false;
+
+                                            _currentPasswordController.clear();
+                                            _currentPasswordFocused = false;
+                                            _currentPasswordEmpty = false;
+
+                                            _newPasswordController.clear();
+                                            _newPasswordFocused = false;
+                                            _newPasswordEmpty = false;
+
+                                            _fullNameController.clear();
+                                            _fullNameFocused = false;
+                                            _fullNameEmpty = false;
+
+                                            _errorMessage = "";
+                                          }),
+                                          child: Neumorphic(
+                                            duration: const Duration(
+                                                milliseconds: 80),
+                                            style: NeumorphicStyle(
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
+                                                BorderRadius.circular(30.0),
+                                              ),
+                                              depth:
+                                                  (_selected == 2) ? -4.0 : 4.0,
+                                            ),
+                                            child: AnimatedContainer(
+                                              height: _buttonSize * 1.2,
+                                              width: _buttonSize * 1.2,
+                                              alignment: Alignment.center,
+                                              duration: const Duration(
+                                                  milliseconds: 80),
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: Alignment(0.94, 0.92),
+                                                  end: Alignment(-0.88, -0.89),
+                                                  colors: (_selected == 2)
+                                                      ? [
+                                                          const Color(
+                                                              0xff2c2f34),
+                                                          const Color(
+                                                              0xff2c2f34)
+                                                        ]
+                                                      : [
+                                                          const Color(
+                                                              0xff282a2f),
+                                                          const Color(
+                                                              0xff2f3238)
+                                                        ],
+                                                  stops: [0.0, 1.0],
+                                                ),
+                                              ),
+                                              child: FaIcon(
+                                                FontAwesomeIcons.hashtag,
+                                                size: _formFontSize * 1.2,
+                                                color: Colors.white
+                                                    .withOpacity(1.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Listener(
+                                          onPointerUp: (PointerUpEvent event) =>
+                                              setState(() {
+                                            _selected = 3;
+
+                                            _emailController.clear();
+                                            _emailFocused = false;
+                                            _emailEmpty = false;
+
+                                            _emailCurrentPasswordController
+                                                .clear();
+                                            _emailCurrentPasswordFocused =
+                                                false;
+                                            _emailCurrentPasswordEmpty = false;
+
+                                            _currentPasswordController.clear();
+                                            _currentPasswordFocused = false;
+                                            _currentPasswordEmpty = false;
+
+                                            _newPasswordController.clear();
+                                            _newPasswordFocused = false;
+                                            _newPasswordEmpty = false;
+
+                                            _studentsNumberController.clear();
+                                            _studentsNumberFocused = false;
+                                            _studentsNumberEmpty = false;
+
+                                            _errorMessage = "";
+                                          }),
+                                          child: Neumorphic(
+                                            duration: const Duration(
+                                                milliseconds: 80),
+                                            style: NeumorphicStyle(
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
+                                                BorderRadius.circular(30.0),
+                                              ),
+                                              depth:
+                                                  (_selected == 3) ? -4.0 : 4.0,
+                                            ),
+                                            child: AnimatedContainer(
+                                              height: _buttonSize * 1.2,
+                                              width: _buttonSize * 1.2,
+                                              alignment: Alignment.center,
+                                              duration: const Duration(
+                                                  milliseconds: 80),
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: Alignment(0.94, 0.92),
+                                                  end: Alignment(-0.88, -0.89),
+                                                  colors: (_selected == 3)
+                                                      ? [
+                                                          const Color(
+                                                              0xff2c2f34),
+                                                          const Color(
+                                                              0xff2c2f34)
+                                                        ]
+                                                      : [
+                                                          const Color(
+                                                              0xff282a2f),
+                                                          const Color(
+                                                              0xff2f3238)
+                                                        ],
+                                                  stops: [0.0, 1.0],
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                Icons.person_pin_rounded,
+                                                color: Colors.white
+                                                    .withOpacity(1.0),
+                                                size: _formFontSize * 1.2,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: (_selected == 0),
+                                    child: Expanded(
+                                      child: Form(
+                                        key: _emailFormKey,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Neumorphic(
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  style: NeumorphicStyle(
+                                                    depth:
+                                                        _emailCurrentPasswordFocused
+                                                            ? -7.0
+                                                            : 4.0,
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                    ),
+                                                    width: _formFieldWidth,
+                                                    child: TextFormField(
+                                                      focusNode:
+                                                          _emailCurrentPasswordFocus,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      autofocus: false,
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              'SF Pro Text',
+                                                          fontSize:
+                                                              _formFontSize,
+                                                          color: Colors.white
+                                                              .withOpacity(1.0),
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                      controller:
+                                                          _emailCurrentPasswordController,
+                                                      autocorrect: false,
+                                                      obscureText:
+                                                          _passwordVisibilityToggle3,
+                                                      enableSuggestions: false,
+                                                      cursorColor: const Color(
+                                                          0xffee235a),
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .disabled,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    _formFieldPaddingHorizontal,
+                                                                vertical:
+                                                                    _formFieldPaddingVertical),
+                                                        suffixIcon: Padding(
+                                                          padding: EdgeInsets.only(
+                                                              right:
+                                                                  _formFieldPaddingHorizontal),
+                                                          child: InkWell(
+                                                              onTap: () =>
+                                                                  setState(() =>
+                                                                      _passwordVisibilityToggle3 =
+                                                                          !_passwordVisibilityToggle3),
+                                                              child: _passwordVisibilityToggle3
+                                                                  ? Icon(Icons
+                                                                      .visibility_off_rounded)
+                                                                  : Icon(Icons
+                                                                      .visibility_rounded)),
+                                                        ),
+                                                        hintText:
+                                                            "Current password",
+                                                        hintStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -746,87 +797,98 @@ class _AccountPageState extends State<AccountPage>
                                                                   .withOpacity(
                                                                       0.5),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      errorStyle: TextStyle(
-                                                          fontFamily:
-                                                              'SF Pro Text',
-                                                          fontSize:
-                                                              _errorFontSize,
-                                                          color: const Color(
-                                                              0xffee235a),
-                                                          fontWeight:
-                                                              FontWeight.w300),
-                                                      border:
-                                                          UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                                              FontWeight.w300,
+                                                        ),
+                                                        errorStyle: TextStyle(
+                                                            fontFamily:
+                                                                'SF Pro Text',
+                                                            fontSize:
+                                                                _errorFontSize,
+                                                            color: const Color(
+                                                                0xffee235a),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w300),
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide
+                                                                        .none),
+                                                      ),
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty)
+                                                          setState(() {
+                                                            _emailCurrentPasswordEmpty =
+                                                                true;
+                                                          });
+                                                        return null;
+                                                      },
                                                     ),
-                                                    validator: (String value) {
-                                                      if (value.isEmpty)
-                                                        setState(() {
-                                                          _emailCurrentPasswordEmpty =
-                                                              true;
-                                                        });
-                                                      return null;
-                                                    },
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: _formFieldSpacer,
-                                              ),
-                                              Neumorphic(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                style: NeumorphicStyle(
-                                                  depth: _emailFocused
-                                                      ? -7.0
-                                                      : 4.0,
-                                                ),
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.0),
-                                                  width: _formFieldWidth,
-                                                  child: TextFormField(
-                                                    focusNode: _emailFocus,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    textAlignVertical:
-                                                        TextAlignVertical
-                                                            .center,
-                                                    autofocus: false,
-                                                    style: TextStyle(
+                                                SizedBox(
+                                                    height: _formFieldSpacer),
+                                                Neumorphic(
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  style: NeumorphicStyle(
+                                                    depth: _emailFocused
+                                                        ? -7.0
+                                                        : 4.0,
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                    ),
+                                                    width: _formFieldWidth,
+                                                    child: TextFormField(
+                                                      focusNode: _emailFocus,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      autofocus: false,
+                                                      style: TextStyle(
                                                         fontFamily:
                                                             'SF Pro Text',
                                                         fontSize: _formFontSize,
                                                         color: Colors.white
                                                             .withOpacity(1.0),
                                                         fontWeight:
-                                                            FontWeight.w400),
-                                                    controller:
-                                                        _emailController,
-                                                    autocorrect: false,
-                                                    cursorColor:
-                                                        const Color(0xffee235a),
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .disabled,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  _formFieldPaddingHorizontal,
-                                                              vertical:
-                                                                  _formFieldPaddingVertical),
-                                                      suffixIcon: Padding(
-                                                          padding: EdgeInsets.only(
+                                                            FontWeight.w400,
+                                                      ),
+                                                      controller:
+                                                          _emailController,
+                                                      autocorrect: false,
+                                                      cursorColor: const Color(
+                                                          0xffee235a),
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .disabled,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                          horizontal:
+                                                              _formFieldPaddingHorizontal,
+                                                          vertical:
+                                                              _formFieldPaddingVertical,
+                                                        ),
+                                                        suffixIcon: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
                                                               right:
-                                                                  _formFieldPaddingHorizontal),
-                                                          child: Icon(Icons
-                                                              .mail_rounded)),
-                                                      hintText: "New email",
-                                                      hintStyle: TextStyle(
+                                                                  _formFieldPaddingHorizontal,
+                                                            ),
+                                                            child: Icon(Icons
+                                                                .mail_rounded)),
+                                                        hintText: "New email",
+                                                        hintStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -838,8 +900,9 @@ class _AccountPageState extends State<AccountPage>
                                                                   .withOpacity(
                                                                       0.5),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      errorStyle: TextStyle(
+                                                              FontWeight.w300,
+                                                        ),
+                                                        errorStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -847,117 +910,130 @@ class _AccountPageState extends State<AccountPage>
                                                           color: const Color(
                                                               0xffee235a),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      border:
-                                                          UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                                              FontWeight.w300,
+                                                        ),
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty)
+                                                          setState(() {
+                                                            _emailEmpty = true;
+                                                          });
+                                                        return null;
+                                                      },
                                                     ),
-                                                    validator: (String value) {
-                                                      if (value.isEmpty)
-                                                        setState(() {
-                                                          _emailEmpty = true;
-                                                        });
-                                                      return null;
-                                                    },
                                                   ),
                                                 ),
-                                              ),
-                                              Visibility(
-                                                visible: (_errorMessage != ""),
-                                                child: SizedBox(
-                                                  height: _formFieldSpacer,
+                                                Visibility(
+                                                  visible:
+                                                      (_errorMessage != ""),
+                                                  child: SizedBox(
+                                                    height: _formFieldSpacer,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          Visibility(
-                                            visible: (_errorMessage != ""),
-                                            child: SizedBox(
-                                              width: _formFieldWidth -
-                                                  _formFieldPaddingHorizontal,
-                                              child: Text(
-                                                _errorMessage,
-                                                style: TextStyle(
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: (_errorMessage != ""),
+                                              child: SizedBox(
+                                                width: _formFieldWidth -
+                                                    _formFieldPaddingHorizontal,
+                                                child: Text(
+                                                  _errorMessage,
+                                                  style: TextStyle(
                                                     fontFamily: 'SF Pro Text',
                                                     fontSize: _errorFontSize,
                                                     color:
                                                         const Color(0xffee235a),
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                                textAlign: TextAlign.center,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                  visible: (_selected == 1),
-                                  child: Expanded(
-                                    child: Form(
-                                      key: _passwordFormKey,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Neumorphic(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                style: NeumorphicStyle(
-                                                  depth: _currentPasswordFocused
-                                                      ? -7.0
-                                                      : 4.0,
-                                                ),
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.0),
-                                                  width: _formFieldWidth,
-                                                  child: TextFormField(
-                                                    focusNode:
-                                                        _currentPasswordFocus,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    textAlignVertical:
-                                                        TextAlignVertical
-                                                            .center,
-                                                    autofocus: false,
-                                                    style: TextStyle(
+                                  Visibility(
+                                    visible: (_selected == 1),
+                                    child: Expanded(
+                                      child: Form(
+                                        key: _passwordFormKey,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Neumorphic(
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  style: NeumorphicStyle(
+                                                    depth:
+                                                        _currentPasswordFocused
+                                                            ? -7.0
+                                                            : 4.0,
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                    ),
+                                                    width: _formFieldWidth,
+                                                    child: TextFormField(
+                                                      focusNode:
+                                                          _currentPasswordFocus,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      autofocus: false,
+                                                      style: TextStyle(
                                                         fontFamily:
                                                             'SF Pro Text',
                                                         fontSize: _formFontSize,
                                                         color: Colors.white
                                                             .withOpacity(1.0),
                                                         fontWeight:
-                                                            FontWeight.w400),
-                                                    controller:
-                                                        _currentPasswordController,
-                                                    autocorrect: false,
-                                                    obscureText:
-                                                        _passwordVisibilityToggle1,
-                                                    enableSuggestions: false,
-                                                    cursorColor:
-                                                        const Color(0xffee235a),
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .disabled,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  _formFieldPaddingHorizontal,
-                                                              vertical:
-                                                                  _formFieldPaddingVertical),
-                                                      suffixIcon: Padding(
-                                                        padding: EdgeInsets.only(
+                                                            FontWeight.w400,
+                                                      ),
+                                                      controller:
+                                                          _currentPasswordController,
+                                                      autocorrect: false,
+                                                      obscureText:
+                                                          _passwordVisibilityToggle1,
+                                                      enableSuggestions: false,
+                                                      cursorColor: const Color(
+                                                          0xffee235a),
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .disabled,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                          horizontal:
+                                                              _formFieldPaddingHorizontal,
+                                                          vertical:
+                                                              _formFieldPaddingVertical,
+                                                        ),
+                                                        suffixIcon: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
                                                             right:
-                                                                _formFieldPaddingHorizontal),
-                                                        child: InkWell(
+                                                                _formFieldPaddingHorizontal,
+                                                          ),
+                                                          child: InkWell(
                                                             onTap: () => setState(() =>
                                                                 _passwordVisibilityToggle1 =
                                                                     !_passwordVisibilityToggle1),
@@ -965,11 +1041,12 @@ class _AccountPageState extends State<AccountPage>
                                                                 ? Icon(Icons
                                                                     .visibility_off_rounded)
                                                                 : Icon(Icons
-                                                                    .visibility_rounded)),
-                                                      ),
-                                                      hintText:
-                                                          "Current password",
-                                                      hintStyle: TextStyle(
+                                                                    .visibility_rounded),
+                                                          ),
+                                                        ),
+                                                        hintText:
+                                                            "Current password",
+                                                        hintStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -981,88 +1058,99 @@ class _AccountPageState extends State<AccountPage>
                                                                   .withOpacity(
                                                                       0.5),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      errorStyle: TextStyle(
-                                                          fontFamily:
-                                                              'SF Pro Text',
-                                                          fontSize:
-                                                              _errorFontSize,
-                                                          color: const Color(
-                                                              0xffee235a),
-                                                          fontWeight:
-                                                              FontWeight.w300),
-                                                      border:
-                                                          UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                                              FontWeight.w300,
+                                                        ),
+                                                        errorStyle: TextStyle(
+                                                            fontFamily:
+                                                                'SF Pro Text',
+                                                            fontSize:
+                                                                _errorFontSize,
+                                                            color: const Color(
+                                                                0xffee235a),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w300),
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty)
+                                                          setState(() {
+                                                            _currentPasswordEmpty =
+                                                                true;
+                                                          });
+                                                        return null;
+                                                      },
                                                     ),
-                                                    validator: (String value) {
-                                                      if (value.isEmpty)
-                                                        setState(() {
-                                                          _currentPasswordEmpty =
-                                                              true;
-                                                        });
-                                                      return null;
-                                                    },
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: _formFieldSpacer,
-                                              ),
-                                              Neumorphic(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                style: NeumorphicStyle(
-                                                  depth: _newPasswordFocused
-                                                      ? -7.0
-                                                      : 4.0,
-                                                ),
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.0),
-                                                  width: _formFieldWidth,
-                                                  child: TextFormField(
-                                                    focusNode:
-                                                        _newPasswordFocus,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    textAlignVertical:
-                                                        TextAlignVertical
-                                                            .center,
-                                                    autofocus: false,
-                                                    style: TextStyle(
+                                                SizedBox(
+                                                    height: _formFieldSpacer),
+                                                Neumorphic(
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  style: NeumorphicStyle(
+                                                    depth: _newPasswordFocused
+                                                        ? -7.0
+                                                        : 4.0,
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                    ),
+                                                    width: _formFieldWidth,
+                                                    child: TextFormField(
+                                                      focusNode:
+                                                          _newPasswordFocus,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      autofocus: false,
+                                                      style: TextStyle(
                                                         fontFamily:
                                                             'SF Pro Text',
                                                         fontSize: _formFontSize,
                                                         color: Colors.white
                                                             .withOpacity(1.0),
                                                         fontWeight:
-                                                            FontWeight.w400),
-                                                    controller:
-                                                        _newPasswordController,
-                                                    autocorrect: false,
-                                                    obscureText:
-                                                        _passwordVisibilityToggle2,
-                                                    enableSuggestions: false,
-                                                    cursorColor:
-                                                        const Color(0xffee235a),
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .disabled,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  _formFieldPaddingHorizontal,
-                                                              vertical:
-                                                                  _formFieldPaddingVertical),
-                                                      suffixIcon: Padding(
-                                                        padding: EdgeInsets.only(
+                                                            FontWeight.w400,
+                                                      ),
+                                                      controller:
+                                                          _newPasswordController,
+                                                      autocorrect: false,
+                                                      obscureText:
+                                                          _passwordVisibilityToggle2,
+                                                      enableSuggestions: false,
+                                                      cursorColor: const Color(
+                                                          0xffee235a),
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .disabled,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                          horizontal:
+                                                              _formFieldPaddingHorizontal,
+                                                          vertical:
+                                                              _formFieldPaddingVertical,
+                                                        ),
+                                                        suffixIcon: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
                                                             right:
-                                                                _formFieldPaddingHorizontal),
-                                                        child: InkWell(
+                                                                _formFieldPaddingHorizontal,
+                                                          ),
+                                                          child: InkWell(
                                                             onTap: () => setState(() =>
                                                                 _passwordVisibilityToggle2 =
                                                                     !_passwordVisibilityToggle2),
@@ -1070,10 +1158,12 @@ class _AccountPageState extends State<AccountPage>
                                                                 ? Icon(Icons
                                                                     .visibility_off_rounded)
                                                                 : Icon(Icons
-                                                                    .visibility_rounded)),
-                                                      ),
-                                                      hintText: "New password",
-                                                      hintStyle: TextStyle(
+                                                                    .visibility_rounded),
+                                                          ),
+                                                        ),
+                                                        hintText:
+                                                            "New password",
+                                                        hintStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -1085,8 +1175,9 @@ class _AccountPageState extends State<AccountPage>
                                                                   .withOpacity(
                                                                       0.5),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      errorStyle: TextStyle(
+                                                              FontWeight.w300,
+                                                        ),
+                                                        errorStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -1094,126 +1185,139 @@ class _AccountPageState extends State<AccountPage>
                                                           color: const Color(
                                                               0xffee235a),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      border:
-                                                          UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                                              FontWeight.w300,
+                                                        ),
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty)
+                                                          setState(() {
+                                                            _newPasswordEmpty =
+                                                                true;
+                                                          });
+                                                        return null;
+                                                      },
                                                     ),
-                                                    validator: (String value) {
-                                                      if (value.isEmpty)
-                                                        setState(() {
-                                                          _newPasswordEmpty =
-                                                              true;
-                                                        });
-                                                      return null;
-                                                    },
                                                   ),
                                                 ),
-                                              ),
-                                              Visibility(
-                                                visible: (_errorMessage != ""),
-                                                child: SizedBox(
-                                                  height: _formFieldSpacer,
+                                                Visibility(
+                                                  visible:
+                                                      (_errorMessage != ""),
+                                                  child: SizedBox(
+                                                      height: _formFieldSpacer),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          Visibility(
-                                            visible: (_errorMessage != ""),
-                                            child: SizedBox(
-                                              width: _formFieldWidth -
-                                                  _formFieldPaddingHorizontal,
-                                              child: Text(
-                                                _errorMessage,
-                                                style: TextStyle(
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: (_errorMessage != ""),
+                                              child: SizedBox(
+                                                width: _formFieldWidth -
+                                                    _formFieldPaddingHorizontal,
+                                                child: Text(
+                                                  _errorMessage,
+                                                  style: TextStyle(
                                                     fontFamily: 'SF Pro Text',
                                                     fontSize: _errorFontSize,
                                                     color:
                                                         const Color(0xffee235a),
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                                textAlign: TextAlign.center,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                  visible: (_selected == 2),
-                                  child: Expanded(
-                                    child: Form(
-                                      key: _studentsNumberFormKey,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Neumorphic(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                style: NeumorphicStyle(
-                                                  depth: _studentsNumberFocused
-                                                      ? -7.0
-                                                      : 4.0,
-                                                ),
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.0),
-                                                  width: _formFieldWidth,
-                                                  child: TextFormField(
-                                                    focusNode:
-                                                        _studentsNumberFocus,
-                                                    keyboardType:
-                                                        TextInputType.number,
-                                                    textAlignVertical:
-                                                        TextAlignVertical
-                                                            .center,
-                                                    autofocus: false,
-                                                    style: TextStyle(
+                                  Visibility(
+                                    visible: (_selected == 2),
+                                    child: Expanded(
+                                      child: Form(
+                                        key: _studentsNumberFormKey,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Neumorphic(
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  style: NeumorphicStyle(
+                                                    depth:
+                                                        _studentsNumberFocused
+                                                            ? -7.0
+                                                            : 4.0,
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                    ),
+                                                    width: _formFieldWidth,
+                                                    child: TextFormField(
+                                                      focusNode:
+                                                          _studentsNumberFocus,
+                                                      keyboardType:
+                                                          TextInputType.number,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      autofocus: false,
+                                                      style: TextStyle(
                                                         fontFamily:
                                                             'SF Pro Text',
                                                         fontSize: _formFontSize,
                                                         color: Colors.white
                                                             .withOpacity(1.0),
                                                         fontWeight:
-                                                            FontWeight.w400),
-                                                    controller:
-                                                        _studentsNumberController,
-                                                    autocorrect: false,
-                                                    cursorColor:
-                                                        const Color(0xffee235a),
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .disabled,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  _formFieldPaddingHorizontal,
-                                                              vertical:
-                                                                  _formFieldPaddingVertical),
-                                                      suffixIcon: Padding(
-                                                          padding: EdgeInsets.only(
-                                                              right:
-                                                                  _formFieldPaddingHorizontal),
+                                                            FontWeight.w400,
+                                                      ),
+                                                      controller:
+                                                          _studentsNumberController,
+                                                      autocorrect: false,
+                                                      cursorColor: const Color(
+                                                          0xffee235a),
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .disabled,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                          horizontal:
+                                                              _formFieldPaddingHorizontal,
+                                                          vertical:
+                                                              _formFieldPaddingVertical,
+                                                        ),
+                                                        suffixIcon: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            right:
+                                                                _formFieldPaddingHorizontal,
+                                                          ),
                                                           child: Container(
-                                                              width: 30,
-                                                              color: Colors
-                                                                  .transparent,
-                                                              alignment: Alignment
-                                                                  .centerRight,
-                                                              child: FaIcon(
-                                                                  FontAwesomeIcons
-                                                                      .hashtag))),
-                                                      hintText:
-                                                          "New student's number",
-                                                      hintStyle: TextStyle(
+                                                            width: 30,
+                                                            color: Colors
+                                                                .transparent,
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: FaIcon(
+                                                                FontAwesomeIcons
+                                                                    .hashtag),
+                                                          ),
+                                                        ),
+                                                        hintText:
+                                                            "New student's number",
+                                                        hintStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -1225,8 +1329,9 @@ class _AccountPageState extends State<AccountPage>
                                                                   .withOpacity(
                                                                       0.5),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      errorStyle: TextStyle(
+                                                              FontWeight.w300,
+                                                        ),
+                                                        errorStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -1234,117 +1339,131 @@ class _AccountPageState extends State<AccountPage>
                                                           color: const Color(
                                                               0xffee235a),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      border:
-                                                          UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                                              FontWeight.w300,
+                                                        ),
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty)
+                                                          setState(() {
+                                                            _studentsNumberEmpty =
+                                                                true;
+                                                          });
+                                                        return null;
+                                                      },
                                                     ),
-                                                    validator: (String value) {
-                                                      if (value.isEmpty)
-                                                        setState(() {
-                                                          _studentsNumberEmpty =
-                                                              true;
-                                                        });
-                                                      return null;
-                                                    },
                                                   ),
                                                 ),
-                                              ),
-                                              Visibility(
-                                                visible: (_errorMessage != ""),
-                                                child: SizedBox(
-                                                  height: _formFieldSpacer,
+                                                Visibility(
+                                                  visible:
+                                                      (_errorMessage != ""),
+                                                  child: SizedBox(
+                                                    height: _formFieldSpacer,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          Visibility(
-                                            visible: (_errorMessage != ""),
-                                            child: SizedBox(
-                                              width: _formFieldWidth -
-                                                  _formFieldPaddingHorizontal,
-                                              child: Text(
-                                                _errorMessage,
-                                                style: TextStyle(
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: (_errorMessage != ""),
+                                              child: SizedBox(
+                                                width: _formFieldWidth -
+                                                    _formFieldPaddingHorizontal,
+                                                child: Text(
+                                                  _errorMessage,
+                                                  style: TextStyle(
                                                     fontFamily: 'SF Pro Text',
                                                     fontSize: _errorFontSize,
                                                     color:
                                                         const Color(0xffee235a),
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                                textAlign: TextAlign.center,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                  visible: (_selected == 3),
-                                  child: Expanded(
-                                    child: Form(
-                                      key: _fullNameFormKey,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Neumorphic(
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                style: NeumorphicStyle(
-                                                  depth: _fullNameFocused
-                                                      ? -7.0
-                                                      : 4.0,
-                                                ),
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.0),
-                                                  width: _formFieldWidth,
-                                                  child: TextFormField(
-                                                    focusNode: _fullNameFocus,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    textAlignVertical:
-                                                        TextAlignVertical
-                                                            .center,
-                                                    autofocus: false,
-                                                    style: TextStyle(
+                                  Visibility(
+                                    visible: (_selected == 3),
+                                    child: Expanded(
+                                      child: Form(
+                                        key: _fullNameFormKey,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Neumorphic(
+                                                  duration: Duration(
+                                                    milliseconds: 300,
+                                                  ),
+                                                  style: NeumorphicStyle(
+                                                    depth: _fullNameFocused
+                                                        ? -7.0
+                                                        : 4.0,
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                    ),
+                                                    width: _formFieldWidth,
+                                                    child: TextFormField(
+                                                      focusNode: _fullNameFocus,
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      autofocus: false,
+                                                      style: TextStyle(
                                                         fontFamily:
                                                             'SF Pro Text',
                                                         fontSize: _formFontSize,
                                                         color: Colors.white
                                                             .withOpacity(1.0),
                                                         fontWeight:
-                                                            FontWeight.w400),
-                                                    controller:
-                                                        _fullNameController,
-                                                    autocorrect: false,
-                                                    cursorColor:
-                                                        const Color(0xffee235a),
-                                                    autovalidateMode:
-                                                        AutovalidateMode
-                                                            .disabled,
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  _formFieldPaddingHorizontal,
-                                                              vertical:
-                                                                  _formFieldPaddingVertical),
-                                                      suffixIcon: Padding(
-                                                          padding: EdgeInsets.only(
-                                                              right:
-                                                                  _formFieldPaddingHorizontal),
+                                                            FontWeight.w400,
+                                                      ),
+                                                      controller:
+                                                          _fullNameController,
+                                                      autocorrect: false,
+                                                      cursorColor: const Color(
+                                                          0xffee235a),
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .disabled,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                          horizontal:
+                                                              _formFieldPaddingHorizontal,
+                                                          vertical:
+                                                              _formFieldPaddingVertical,
+                                                        ),
+                                                        suffixIcon: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            right:
+                                                                _formFieldPaddingHorizontal,
+                                                          ),
                                                           child: Icon(Icons
-                                                              .person_pin_rounded)),
-                                                      hintText: "New name",
-                                                      hintStyle: TextStyle(
+                                                              .person_pin_rounded),
+                                                        ),
+                                                        hintText: "New name",
+                                                        hintStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -1356,8 +1475,9 @@ class _AccountPageState extends State<AccountPage>
                                                                   .withOpacity(
                                                                       0.5),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      errorStyle: TextStyle(
+                                                              FontWeight.w300,
+                                                        ),
+                                                        errorStyle: TextStyle(
                                                           fontFamily:
                                                               'SF Pro Text',
                                                           fontSize:
@@ -1365,94 +1485,98 @@ class _AccountPageState extends State<AccountPage>
                                                           color: const Color(
                                                               0xffee235a),
                                                           fontWeight:
-                                                              FontWeight.w300),
-                                                      border:
-                                                          UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                                              FontWeight.w300,
+                                                        ),
+                                                        border:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                      validator:
+                                                          (String value) {
+                                                        if (value.isEmpty)
+                                                          setState(() {
+                                                            _fullNameEmpty =
+                                                                true;
+                                                          });
+                                                        return null;
+                                                      },
                                                     ),
-                                                    validator: (String value) {
-                                                      if (value.isEmpty)
-                                                        setState(() {
-                                                          _fullNameEmpty = true;
-                                                        });
-                                                      return null;
-                                                    },
                                                   ),
                                                 ),
-                                              ),
-                                              Visibility(
-                                                visible: (_errorMessage != ""),
-                                                child: SizedBox(
-                                                  height: _formFieldSpacer,
+                                                Visibility(
+                                                  visible:
+                                                      (_errorMessage != ""),
+                                                  child: SizedBox(
+                                                      height: _formFieldSpacer),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          Visibility(
-                                            visible: (_errorMessage != ""),
-                                            child: SizedBox(
-                                              width: _formFieldWidth -
-                                                  _formFieldPaddingHorizontal,
-                                              child: Text(
-                                                _errorMessage,
-                                                style: TextStyle(
+                                              ],
+                                            ),
+                                            Visibility(
+                                              visible: (_errorMessage != ""),
+                                              child: SizedBox(
+                                                width: _formFieldWidth -
+                                                    _formFieldPaddingHorizontal,
+                                                child: Text(
+                                                  _errorMessage,
+                                                  style: TextStyle(
                                                     fontFamily: 'SF Pro Text',
                                                     fontSize: _errorFontSize,
                                                     color:
                                                         const Color(0xffee235a),
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                                textAlign: TextAlign.center,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    switch (_selected) {
-                                      case 0:
-                                        {
-                                          if (_emailFormKey.currentState
-                                              .validate()) {
-                                            setState(() {
-                                              _loading = true;
-                                            });
-                                            FocusScope.of(context).unfocus();
-                                            var _error = await context
-                                                .read<AuthenticationService>()
-                                                .changeEmail(
+                                  InkWell(
+                                    onTap: () async {
+                                      switch (_selected) {
+                                        case 0:
+                                          {
+                                            if (_emailFormKey.currentState
+                                                .validate()) {
+                                              setState(() {
+                                                _loading = true;
+                                              });
+                                              FocusScope.of(context).unfocus();
+                                              var _error = await context
+                                                  .read<AuthenticationService>()
+                                                  .changeEmail(
                                                     currentPassword:
                                                         _emailCurrentPasswordController
                                                             .text
                                                             .trim(),
                                                     newMail: _emailController
                                                         .text
-                                                        .trim());
-                                            setState(() {
-                                              _errorMessage = _error;
-                                              _loading = false;
-                                            });
+                                                        .trim(),
+                                                  );
+                                              setState(() {
+                                                _errorMessage = _error;
+                                                _loading = false;
+                                              });
+                                            }
                                           }
-                                        }
-                                        break;
+                                          break;
 
-                                      case 1:
-                                        {
-                                          if (_passwordFormKey.currentState
-                                              .validate()) {
-                                            setState(() {
-                                              _loading = true;
-                                            });
-                                            FocusScope.of(context).unfocus();
-                                            var _error = await context
-                                                .read<AuthenticationService>()
-                                                .changePassword(
+                                        case 1:
+                                          {
+                                            if (_passwordFormKey.currentState
+                                                .validate()) {
+                                              setState(() {
+                                                _loading = true;
+                                              });
+                                              FocusScope.of(context).unfocus();
+                                              var _error = await context
+                                                  .read<AuthenticationService>()
+                                                  .changePassword(
                                                     currentPassword:
                                                         _currentPasswordController
                                                             .text
@@ -1460,98 +1584,107 @@ class _AccountPageState extends State<AccountPage>
                                                     newPassword:
                                                         _newPasswordController
                                                             .text
-                                                            .trim());
-                                            setState(() {
-                                              _errorMessage = _error;
-                                              _loading = false;
-                                            });
+                                                            .trim(),
+                                                  );
+                                              setState(() {
+                                                _errorMessage = _error;
+                                                _loading = false;
+                                              });
+                                            }
                                           }
-                                        }
-                                        break;
+                                          break;
 
-                                      case 2:
-                                        {
-                                          if (_studentsNumberFormKey
-                                              .currentState
-                                              .validate()) {
-                                            setState(() {
-                                              _loading = true;
-                                            });
-                                            FocusScope.of(context).unfocus();
-                                            var _error = await context
-                                                .read<AuthenticationService>()
-                                                .changeStudentsNumber(
+                                        case 2:
+                                          {
+                                            if (_studentsNumberFormKey
+                                                .currentState
+                                                .validate()) {
+                                              setState(() {
+                                                _loading = true;
+                                              });
+                                              FocusScope.of(context).unfocus();
+                                              var _error = await context
+                                                  .read<AuthenticationService>()
+                                                  .changeStudentsNumber(
                                                     studentsNumber:
                                                         _studentsNumberController
                                                             .text
-                                                            .trim());
-                                            setState(() {
-                                              getUserData()
-                                                  .then((val) => setState(() {
-                                                        _name = val['name'];
-                                                        _studentsNumber =
-                                                            val['studentsNumber']
-                                                                .toString();
-                                                      }));
-                                              _errorMessage = _error;
-                                              _loading = false;
-                                            });
+                                                            .trim(),
+                                                  );
+                                              setState(() {
+                                                getUserData().then(
+                                                  (val) => setState(() {
+                                                    _name = val['name'];
+                                                    _studentsNumber =
+                                                        val['studentsNumber']
+                                                            .toString();
+                                                  }),
+                                                );
+                                                _errorMessage = _error;
+                                                _loading = false;
+                                              });
+                                            }
                                           }
-                                        }
-                                        break;
+                                          break;
 
-                                      case 3:
-                                        {
-                                          if (_fullNameFormKey.currentState
-                                              .validate()) {
-                                            setState(() {
-                                              _loading = true;
-                                            });
-                                            FocusScope.of(context).unfocus();
-                                            var _error = await context
-                                                .read<AuthenticationService>()
-                                                .changeFullName(
+                                        case 3:
+                                          {
+                                            if (_fullNameFormKey.currentState
+                                                .validate()) {
+                                              setState(() {
+                                                _loading = true;
+                                              });
+                                              FocusScope.of(context).unfocus();
+                                              var _error = await context
+                                                  .read<AuthenticationService>()
+                                                  .changeFullName(
                                                     fullName:
                                                         _fullNameController.text
-                                                            .trim());
-                                            setState(() {
-                                              getUserData()
-                                                  .then((val) => setState(() {
-                                                        _name = val['name'];
-                                                        _studentsNumber =
-                                                            val['studentsNumber']
-                                                                .toString();
-                                                      }));
-                                              _errorMessage = _error;
-                                              _loading = false;
-                                            });
+                                                            .trim(),
+                                                  );
+                                              setState(() {
+                                                getUserData().then(
+                                                  (val) => setState(() {
+                                                    _name = val['name'];
+                                                    _studentsNumber =
+                                                        val['studentsNumber']
+                                                            .toString();
+                                                  }),
+                                                );
+                                                _errorMessage = _error;
+                                                _loading = false;
+                                              });
+                                            }
                                           }
-                                        }
-                                        break;
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: _verticalPadding * 2),
-                                    child: AccentButton(
-                                      width: _formFieldWidth,
-                                      height: _screenHeight / 20,
-                                      text: "Save changes",
-                                      loading: _loading,
+                                          break;
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: _verticalPadding * 2,
+                                      ),
+                                      child: AccentButton(
+                                        width: _formFieldWidth,
+                                        height: _screenHeight / 20,
+                                        text: "Save changes",
+                                        loading: _loading,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ]);
-          }),
+            ],
+          );
+        },
+      ),
     );
   }
 

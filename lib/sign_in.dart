@@ -75,7 +75,8 @@ class _SignInPageState extends State<SignInPage> {
             height: _screenWidth - (_screenWidth / 10),
             width: _screenWidth - (_screenWidth / 10),
             padding: EdgeInsets.symmetric(
-                vertical: _formFieldPaddingHorizontal / 1.5),
+              vertical: _formFieldPaddingHorizontal / 1.5,
+            ),
             child: Form(
               key: _formKey,
               child: Column(
@@ -83,27 +84,32 @@ class _SignInPageState extends State<SignInPage> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                        bottom: _formFieldPaddingHorizontal / 2),
+                      bottom: _formFieldPaddingHorizontal / 2,
+                    ),
                     child: RichText(
                       textAlign: TextAlign.left,
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: "Log",
-                          style: TextStyle(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Log",
+                            style: TextStyle(
                               fontFamily: 'SF Pro Display',
                               fontSize: _headingFontSize,
                               color: Colors.white.withOpacity(1.0),
-                              fontWeight: FontWeight.w700),
-                        ),
-                        TextSpan(
-                          text: " in",
-                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " in",
+                            style: TextStyle(
                               fontFamily: 'SF Pro Display',
                               fontSize: _headingFontSize,
                               color: Colors.white.withOpacity(1.0),
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ]),
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Column(
@@ -121,37 +127,43 @@ class _SignInPageState extends State<SignInPage> {
                             textAlignVertical: TextAlignVertical.center,
                             autofocus: false,
                             style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontSize: _formFontSize,
-                                color: Colors.white.withOpacity(1.0),
-                                fontWeight: FontWeight.w400),
+                              fontFamily: 'SF Pro Text',
+                              fontSize: _formFontSize,
+                              color: Colors.white.withOpacity(1.0),
+                              fontWeight: FontWeight.w400,
+                            ),
                             controller: _emailController,
                             autocorrect: false,
                             cursorColor: const Color(0xffee235a),
                             autovalidateMode: AutovalidateMode.disabled,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: _formFieldPaddingHorizontal,
-                                  vertical: _formFieldPaddingVertical),
+                                horizontal: _formFieldPaddingHorizontal,
+                                vertical: _formFieldPaddingVertical,
+                              ),
                               suffixIcon: Padding(
                                   padding: EdgeInsets.only(
-                                      right: _formFieldPaddingHorizontal),
+                                    right: _formFieldPaddingHorizontal,
+                                  ),
                                   child: Icon(Icons.mail_rounded)),
                               hintText: "Email",
                               hintStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _formFontSize,
-                                  color: _emailEmpty
-                                      ? const Color(0xffee235a)
-                                      : Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _formFontSize,
+                                color: _emailEmpty
+                                    ? const Color(0xffee235a)
+                                    : Colors.white.withOpacity(0.5),
+                                fontWeight: FontWeight.w300,
+                              ),
                               errorStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _errorFontSize,
-                                  color: const Color(0xffee235a),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _errorFontSize,
+                                color: const Color(0xffee235a),
+                                fontWeight: FontWeight.w300,
+                              ),
                               border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                             validator: (String value) {
                               if (value.isEmpty)
@@ -179,10 +191,11 @@ class _SignInPageState extends State<SignInPage> {
                             textAlignVertical: TextAlignVertical.center,
                             autofocus: false,
                             style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontSize: _formFontSize,
-                                color: Colors.white.withOpacity(1.0),
-                                fontWeight: FontWeight.w400),
+                              fontFamily: 'SF Pro Text',
+                              fontSize: _formFontSize,
+                              color: Colors.white.withOpacity(1.0),
+                              fontWeight: FontWeight.w400,
+                            ),
                             controller: _passwordController,
                             autocorrect: false,
                             obscureText: _passwordVisibilityToggle,
@@ -191,34 +204,40 @@ class _SignInPageState extends State<SignInPage> {
                             autovalidateMode: AutovalidateMode.disabled,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: _formFieldPaddingHorizontal,
-                                  vertical: _formFieldPaddingVertical),
+                                horizontal: _formFieldPaddingHorizontal,
+                                vertical: _formFieldPaddingVertical,
+                              ),
                               suffixIcon: Padding(
                                 padding: EdgeInsets.only(
-                                    right: _formFieldPaddingHorizontal),
+                                  right: _formFieldPaddingHorizontal,
+                                ),
                                 child: InkWell(
-                                    onTap: () => setState(() =>
-                                        _passwordVisibilityToggle =
-                                            !_passwordVisibilityToggle),
-                                    child: _passwordVisibilityToggle
-                                        ? Icon(Icons.visibility_off_rounded)
-                                        : Icon(Icons.visibility_rounded)),
+                                  onTap: () => setState(() =>
+                                      _passwordVisibilityToggle =
+                                          !_passwordVisibilityToggle),
+                                  child: _passwordVisibilityToggle
+                                      ? Icon(Icons.visibility_off_rounded)
+                                      : Icon(Icons.visibility_rounded),
+                                ),
                               ),
                               hintText: "Password",
                               hintStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _formFontSize,
-                                  color: _passwordEmpty
-                                      ? const Color(0xffee235a)
-                                      : Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _formFontSize,
+                                color: _passwordEmpty
+                                    ? const Color(0xffee235a)
+                                    : Colors.white.withOpacity(0.5),
+                                fontWeight: FontWeight.w300,
+                              ),
                               errorStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _errorFontSize,
-                                  color: const Color(0xffee235a),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _errorFontSize,
+                                color: const Color(0xffee235a),
+                                fontWeight: FontWeight.w300,
+                              ),
                               border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                             validator: (String value) {
                               if (value.isEmpty)
@@ -239,10 +258,11 @@ class _SignInPageState extends State<SignInPage> {
                       child: Text(
                         _errorMessage,
                         style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: _errorFontSize,
-                            color: const Color(0xffee235a),
-                            fontWeight: FontWeight.w300),
+                          fontFamily: 'SF Pro Text',
+                          fontSize: _errorFontSize,
+                          color: const Color(0xffee235a),
+                          fontWeight: FontWeight.w300,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -279,7 +299,8 @@ class _SignInPageState extends State<SignInPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpPage()));
+                            builder: (context) => SignUpPage(),
+                          ));
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -290,10 +311,11 @@ class _SignInPageState extends State<SignInPage> {
                       child: Text(
                         "Don't have an account? Sign up!",
                         style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: _formFontSize,
-                            color: Colors.white.withOpacity(0.5),
-                            fontWeight: FontWeight.w300),
+                          fontFamily: 'SF Pro Text',
+                          fontSize: _formFontSize,
+                          color: Colors.white.withOpacity(0.5),
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ),
                   ),

@@ -23,7 +23,9 @@ class AuthenticationService {
     if (email.isEmpty || password.isEmpty) return "All fields are required!";
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
       switch (e.message) {
@@ -41,11 +43,12 @@ class AuthenticationService {
     }
   }
 
-  Future<String> signUp(
-      {String email,
-      String password,
-      String studentsNumber,
-      String fullName}) async {
+  Future<String> signUp({
+    String email,
+    String password,
+    String studentsNumber,
+    String fullName,
+  }) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none)
       return "No internet connection!";
@@ -82,7 +85,8 @@ class AuthenticationService {
           .collection('users')
           .doc(this._firebaseAuth.currentUser.uid)
           .set({'name': fullName, "studentsNumber": studentsNumber}).then(
-              (value) {});
+        (value) {},
+      );
 
       var subjects = new Map<String, dynamic>();
       for (var _day in [
@@ -97,12 +101,14 @@ class AuthenticationService {
             .doc(studentsNumber)
             .collection(_day)
             .get()
-            .then((QuerySnapshot querySnapshot) => {
-                  querySnapshot.docs.forEach((element) {
-                    subjects.addAll(
-                        {element.data()['code']: element.data()['full_name']});
-                  })
-                });
+            .then(
+              (QuerySnapshot querySnapshot) => {
+                querySnapshot.docs.forEach((element) {
+                  subjects.addAll(
+                      {element.data()['code']: element.data()['full_name']});
+                })
+              },
+            );
       }
 
       subjects.forEach((key, value) async {
@@ -250,13 +256,11 @@ class AuthenticationService {
           .collection('grades')
           .doc(this._firebaseAuth.currentUser.uid)
           .collection(subjectId)
-          .add(
-        {
-          'name': name,
-          "grade": grade,
-          "percent": percent,
-        },
-      );
+          .add({
+        'name': name,
+        "grade": grade,
+        "percent": percent,
+      });
       return "";
     } catch (e) {
       return e.message;

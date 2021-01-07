@@ -5,10 +5,11 @@ class BusInfo {
   final String busNameTo;
   final List<String> arrivals;
 
-  BusInfo(
-      {@required this.busId,
-      @required this.busNameTo,
-      @required this.arrivals});
+  BusInfo({
+    @required this.busId,
+    @required this.busNameTo,
+    @required this.arrivals,
+  });
 
   factory BusInfo.fromJson(Map<String, dynamic> json) {
     List<String> arr = [];

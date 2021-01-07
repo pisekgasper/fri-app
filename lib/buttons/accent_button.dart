@@ -33,10 +33,16 @@ class _AccentButtonState extends State<AccentButton>
               gradient: LinearGradient(
                 begin: Alignment(-0.52, -1.0),
                 end: Alignment(0.38, 1.0),
-                colors: [const Color(0xffee235a), const Color(0xff9f2042)],
+                colors: [
+                  const Color(0xffee235a),
+                  const Color(0xff9f2042),
+                ],
                 stops: [0.0, 1.0],
               ),
-              border: Border.all(width: 1.0, color: const Color(0xffee235a)),
+              border: Border.all(
+                width: 1.0,
+                color: const Color(0xffee235a),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xffee235a),
@@ -52,16 +58,19 @@ class _AccentButtonState extends State<AccentButton>
               color: Colors.white,
               size: _buttonFontSize,
               controller: AnimationController(
-                  vsync: this, duration: const Duration(milliseconds: 1200)),
+                vsync: this,
+                duration: const Duration(milliseconds: 1200),
+              ),
             )
           : Text(
               widget.text,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontFamily: 'SF Pro Text',
-                  fontSize: _buttonFontSize,
-                  color: Colors.white.withOpacity(1.0),
-                  fontWeight: FontWeight.w300),
+                fontFamily: 'SF Pro Text',
+                fontSize: _buttonFontSize,
+                color: Colors.white.withOpacity(1.0),
+                fontWeight: FontWeight.w300,
+              ),
             ),
     );
   }

@@ -98,7 +98,8 @@ class _SignUpPageState extends State<SignUpPage> {
             height: _screenWidth + (_screenWidth / 4),
             width: _screenWidth - (_screenWidth / 10),
             padding: EdgeInsets.symmetric(
-                vertical: _formFieldPaddingHorizontal / 1.5),
+              vertical: _formFieldPaddingHorizontal / 1.5,
+            ),
             child: Form(
               key: _formKey,
               child: Column(
@@ -106,27 +107,32 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                        bottom: _formFieldPaddingHorizontal / 2),
+                      bottom: _formFieldPaddingHorizontal / 2,
+                    ),
                     child: RichText(
                       textAlign: TextAlign.left,
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: "Sign",
-                          style: TextStyle(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Sign",
+                            style: TextStyle(
                               fontFamily: 'SF Pro Display',
                               fontSize: _headingFontSize,
                               color: Colors.white.withOpacity(1.0),
-                              fontWeight: FontWeight.w700),
-                        ),
-                        TextSpan(
-                          text: " up",
-                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          TextSpan(
+                            text: " up",
+                            style: TextStyle(
                               fontFamily: 'SF Pro Display',
                               fontSize: _headingFontSize,
                               color: Colors.white.withOpacity(1.0),
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ]),
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Column(
@@ -137,7 +143,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           depth: _emailFocused ? -7.0 : 4.0,
                         ),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 0.0),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0.0,
+                          ),
                           width: _formFieldWidth,
                           child: TextFormField(
                             focusNode: _emailFocus,
@@ -155,27 +163,33 @@ class _SignUpPageState extends State<SignUpPage> {
                             autovalidateMode: AutovalidateMode.disabled,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: _formFieldPaddingHorizontal,
-                                  vertical: _formFieldPaddingVertical),
+                                horizontal: _formFieldPaddingHorizontal,
+                                vertical: _formFieldPaddingVertical,
+                              ),
                               suffixIcon: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: _formFieldPaddingHorizontal),
-                                  child: Icon(Icons.mail_rounded)),
+                                padding: EdgeInsets.only(
+                                  right: _formFieldPaddingHorizontal,
+                                ),
+                                child: Icon(Icons.mail_rounded),
+                              ),
                               hintText: "Email",
                               hintStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _formFontSize,
-                                  color: _emailEmpty
-                                      ? const Color(0xffee235a)
-                                      : Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _formFontSize,
+                                color: _emailEmpty
+                                    ? const Color(0xffee235a)
+                                    : Colors.white.withOpacity(0.5),
+                                fontWeight: FontWeight.w300,
+                              ),
                               errorStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _errorFontSize,
-                                  color: const Color(0xffee235a),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _errorFontSize,
+                                color: const Color(0xffee235a),
+                                fontWeight: FontWeight.w300,
+                              ),
                               border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                             validator: (String value) {
                               if (value.isEmpty)
@@ -196,7 +210,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           depth: _passwordFocused ? -7.0 : 4.0,
                         ),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 0.0),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0.0,
+                          ),
                           width: _formFieldWidth,
                           child: TextFormField(
                             focusNode: _passwordFocus,
@@ -204,10 +220,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             textAlignVertical: TextAlignVertical.center,
                             autofocus: false,
                             style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontSize: _formFontSize,
-                                color: Colors.white.withOpacity(1.0),
-                                fontWeight: FontWeight.w400),
+                              fontFamily: 'SF Pro Text',
+                              fontSize: _formFontSize,
+                              color: Colors.white.withOpacity(1.0),
+                              fontWeight: FontWeight.w400,
+                            ),
                             controller: _passwordController,
                             autocorrect: false,
                             obscureText: _passwordVisibilityToggle,
@@ -216,40 +233,48 @@ class _SignUpPageState extends State<SignUpPage> {
                             autovalidateMode: AutovalidateMode.disabled,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: _formFieldPaddingHorizontal,
-                                  vertical: _formFieldPaddingVertical),
+                                horizontal: _formFieldPaddingHorizontal,
+                                vertical: _formFieldPaddingVertical,
+                              ),
                               suffixIcon: Padding(
                                 padding: EdgeInsets.only(
-                                    right: _formFieldPaddingHorizontal),
+                                  right: _formFieldPaddingHorizontal,
+                                ),
                                 child: InkWell(
-                                    onTap: () => setState(() =>
-                                        _passwordVisibilityToggle =
-                                            !_passwordVisibilityToggle),
-                                    child: _passwordVisibilityToggle
-                                        ? Icon(Icons.visibility_off_rounded)
-                                        : Icon(Icons.visibility_rounded)),
+                                  onTap: () => setState(() =>
+                                      _passwordVisibilityToggle =
+                                          !_passwordVisibilityToggle),
+                                  child: _passwordVisibilityToggle
+                                      ? Icon(Icons.visibility_off_rounded)
+                                      : Icon(Icons.visibility_rounded),
+                                ),
                               ),
                               hintText: "Password",
                               hintStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _formFontSize,
-                                  color: _passwordEmpty
-                                      ? const Color(0xffee235a)
-                                      : Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _formFontSize,
+                                color: _passwordEmpty
+                                    ? const Color(0xffee235a)
+                                    : Colors.white.withOpacity(0.5),
+                                fontWeight: FontWeight.w300,
+                              ),
                               errorStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _errorFontSize,
-                                  color: const Color(0xffee235a),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _errorFontSize,
+                                color: const Color(0xffee235a),
+                                fontWeight: FontWeight.w300,
+                              ),
                               border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                             validator: (String value) {
                               if (value.isEmpty)
-                                setState(() {
-                                  _passwordEmpty = true;
-                                });
+                                setState(
+                                  () {
+                                    _passwordEmpty = true;
+                                  },
+                                );
                               return null;
                             },
                           ),
@@ -264,22 +289,26 @@ class _SignUpPageState extends State<SignUpPage> {
                           depth: _studentsNumberFocused ? -7.0 : 4.0,
                         ),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 0.0),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0.0,
+                          ),
                           width: _formFieldWidth,
                           child: TextFormField(
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.allow(
-                                  RegExp(r'[0-9]')),
+                                RegExp(r'[0-9]'),
+                              ),
                             ],
                             focusNode: _studentsNumberFocus,
                             keyboardType: TextInputType.number,
                             textAlignVertical: TextAlignVertical.center,
                             autofocus: false,
                             style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontSize: _formFontSize,
-                                color: Colors.white.withOpacity(1.0),
-                                fontWeight: FontWeight.w400),
+                              fontFamily: 'SF Pro Text',
+                              fontSize: _formFontSize,
+                              color: Colors.white.withOpacity(1.0),
+                              fontWeight: FontWeight.w400,
+                            ),
                             controller: _studentsNumberController,
                             autocorrect: false,
                             enableSuggestions: false,
@@ -287,31 +316,38 @@ class _SignUpPageState extends State<SignUpPage> {
                             autovalidateMode: AutovalidateMode.disabled,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: _formFieldPaddingHorizontal,
-                                  vertical: _formFieldPaddingVertical),
+                                horizontal: _formFieldPaddingHorizontal,
+                                vertical: _formFieldPaddingVertical,
+                              ),
                               suffixIcon: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: _formFieldPaddingHorizontal),
-                                  child: Container(
-                                      width: 30,
-                                      color: Colors.transparent,
-                                      alignment: Alignment.centerRight,
-                                      child: FaIcon(FontAwesomeIcons.hashtag))),
+                                padding: EdgeInsets.only(
+                                  right: _formFieldPaddingHorizontal,
+                                ),
+                                child: Container(
+                                  width: 30,
+                                  color: Colors.transparent,
+                                  alignment: Alignment.centerRight,
+                                  child: FaIcon(FontAwesomeIcons.hashtag),
+                                ),
+                              ),
                               hintText: "Students number",
                               hintStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _formFontSize,
-                                  color: _studentsNumberEmpty
-                                      ? const Color(0xffee235a)
-                                      : Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _formFontSize,
+                                color: _studentsNumberEmpty
+                                    ? const Color(0xffee235a)
+                                    : Colors.white.withOpacity(0.5),
+                                fontWeight: FontWeight.w300,
+                              ),
                               errorStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _errorFontSize,
-                                  color: const Color(0xffee235a),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _errorFontSize,
+                                color: const Color(0xffee235a),
+                                fontWeight: FontWeight.w300,
+                              ),
                               border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                             validator: (String value) {
                               if (value.isEmpty)
@@ -332,7 +368,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           depth: _fullNameFocused ? -7.0 : 4.0,
                         ),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 0.0),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0.0,
+                          ),
                           width: _formFieldWidth,
                           child: TextFormField(
                             focusNode: _fullNameFocus,
@@ -340,10 +378,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             textAlignVertical: TextAlignVertical.center,
                             autofocus: false,
                             style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontSize: _formFontSize,
-                                color: Colors.white.withOpacity(1.0),
-                                fontWeight: FontWeight.w400),
+                              fontFamily: 'SF Pro Text',
+                              fontSize: _formFontSize,
+                              color: Colors.white.withOpacity(1.0),
+                              fontWeight: FontWeight.w400,
+                            ),
                             controller: _fullNameController,
                             autocorrect: false,
                             enableSuggestions: false,
@@ -351,11 +390,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             autovalidateMode: AutovalidateMode.disabled,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  horizontal: _formFieldPaddingHorizontal,
-                                  vertical: _formFieldPaddingVertical),
+                                horizontal: _formFieldPaddingHorizontal,
+                                vertical: _formFieldPaddingVertical,
+                              ),
                               suffixIcon: Padding(
                                 padding: EdgeInsets.only(
-                                    right: _formFieldPaddingHorizontal),
+                                  right: _formFieldPaddingHorizontal,
+                                ),
                                 child: Container(
                                   width: 30,
                                   color: Colors.transparent,
@@ -365,19 +406,22 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               hintText: "Name",
                               hintStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _formFontSize,
-                                  color: _fullNameEmpty
-                                      ? const Color(0xffee235a)
-                                      : Colors.white.withOpacity(0.5),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _formFontSize,
+                                color: _fullNameEmpty
+                                    ? const Color(0xffee235a)
+                                    : Colors.white.withOpacity(0.5),
+                                fontWeight: FontWeight.w300,
+                              ),
                               errorStyle: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: _errorFontSize,
-                                  color: const Color(0xffee235a),
-                                  fontWeight: FontWeight.w300),
+                                fontFamily: 'SF Pro Text',
+                                fontSize: _errorFontSize,
+                                color: const Color(0xffee235a),
+                                fontWeight: FontWeight.w300,
+                              ),
                               border: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                             validator: (String value) {
                               if (value.isEmpty)
@@ -398,10 +442,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Text(
                         _errorMessage,
                         style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: _errorFontSize,
-                            color: const Color(0xffee235a),
-                            fontWeight: FontWeight.w300),
+                          fontFamily: 'SF Pro Text',
+                          fontSize: _errorFontSize,
+                          color: const Color(0xffee235a),
+                          fontWeight: FontWeight.w300,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -413,14 +458,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           _loading = true;
                         });
                         FocusScope.of(context).unfocus();
-                        var _error = await context
-                            .read<AuthenticationService>()
-                            .signUp(
-                                email: _emailController.text.trim(),
-                                password: _passwordController.text.trim(),
-                                studentsNumber:
-                                    _studentsNumberController.text.trim(),
-                                fullName: _fullNameController.text.trim());
+                        var _error =
+                            await context.read<AuthenticationService>().signUp(
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim(),
+                                  studentsNumber:
+                                      _studentsNumberController.text.trim(),
+                                  fullName: _fullNameController.text.trim(),
+                                );
                         if (_error == "") {
                           Navigator.pop(context);
                         }
@@ -448,14 +493,16 @@ class _SignUpPageState extends State<SignUpPage> {
                       alignment: Alignment.center,
                       width: _formFieldWidth,
                       padding: EdgeInsets.symmetric(
-                          vertical: _formFieldPaddingHorizontal / 2),
+                        vertical: _formFieldPaddingHorizontal / 2,
+                      ),
                       child: Text(
                         "Already have an account? Log in!",
                         style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: _formFontSize,
-                            color: Colors.white.withOpacity(0.5),
-                            fontWeight: FontWeight.w300),
+                          fontFamily: 'SF Pro Text',
+                          fontSize: _formFontSize,
+                          color: Colors.white.withOpacity(0.5),
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ),
                   ),
